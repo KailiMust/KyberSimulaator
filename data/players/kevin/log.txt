@@ -1,0 +1,36 @@
+[2025-05-21 21:48:26] Sessioon algas
+[2025-05-21 21:48:26] Loodud uus mängija
+[2025-05-21 21:48:52] Sessioon algas
+[2025-05-21 21:48:52] Alustas stsenaariumit: Kahtlane e-kiri
+[2025-05-21 21:49:13] Vaatas lisainfot küsimuse juures: Mida soovitad Marjul teha?
+[2025-05-21 21:49:15] Vaatas lisainfot küsimuse juures: Mida soovitad Marjul teha?
+[2025-05-21 21:49:17] Vaatas lisainfot küsimuse juures: Mida soovitad Marjul teha?
+[2025-05-21 21:51:16] Stsenaarium: Kahtlane e-kiri | Küsimus: Mida soovitad Marjul teha? | Valik: Soovita kontrollida tegevdirektoriga otse telefoni teel
+[2025-05-21 21:51:21] Vaatas lisainfot küsimuse juures: Marju teavitas sind, et sarnaseid e-kirju on saanud teisedki finantsosakonna töötajad. Mida teeksid järgmiseks?
+[2025-05-21 21:55:53] Stsenaarium katkestatud: Kahtlane e-kiri
+[2025-05-21 21:56:00] Väljus peamenüüsse
+[2025-05-21 21:56:23] Sessioon algas
+[2025-05-21 21:56:23] Loodud uus mängija
+[2025-05-21 21:56:25] Sessioon lõppes | Kestus: 0 minutit | Läbitud stsenaariumid: 0 | Koguskoor: 0
+[2025-05-21 22:02:47] Sessioon algas
+[2025-05-21 22:02:47] Sisenes mängu
+[2025-05-21 22:02:50] Vaatas juhiseid
+[2025-05-21 22:03:05] Sessioon algas
+[2025-05-21 22:03:05] Alustas stsenaariumit: Sotsiaalmeedia kontoloomine
+[2025-05-21 22:03:15] Stsenaarium: Sotsiaalmeedia kontoloomine | Küsimus: Oled valimas loodud kontole parooli. Milline alljärgnevatest paroolidest on kõige turvalisem valik? | Valik: Karm4!Par00l2025
+[2025-05-21 22:03:26] Stsenaarium: Sotsiaalmeedia kontoloomine | Küsimus: Konto loomisel pakutakse võimalust valida turvaküsimus, mille korral saad parooli unustamise korral määrata uue parooli. 
+Millise turvaküsimuse valid? | Valik: Mis on minu õnnenumber?
+[2025-05-21 22:04:10] Stsenaarium: Sotsiaalmeedia kontoloomine | Küsimus: Oled unustanud enda parooli ega pääse enam sotsiaalmeedia kontosse. Mida sa teed? | Valik: Saadan parooli taastamise lingi e-posti aadressile ja kasutan seda, et luua uus parool.
+[2025-05-21 22:04:12] Stsenaarium lõpetatud: Sotsiaalmeedia kontoloomine | Skoor: 30
+[2025-05-21 22:04:29] Sessioon algas
+[2025-05-21 22:04:29] Alustas stsenaariumit: Kahtlane manus e-kirjas
+[2025-05-21 22:04:34] Stsenaarium: Kahtlane manus e-kirjas | Küsimus: Mida peaksid tegema nakatunud arvutiga? | Valik: Eralda arvuti võrgust, puhasta see ja taasta andmed varukoopiast
+[2025-05-21 22:04:37] Stsenaarium: Kahtlane manus e-kirjas | Küsimus: Kuidas peaksid käituma teiste töötajate ja nende arvutitega? | Valik: Keela ajutiselt kõik e-posti manused, tee süsteemne kontroll kõigile seadmetele ja korralda kiirkoolitus
+[2025-05-21 22:04:40] Stsenaarium lõpetatud: Kahtlane manus e-kirjas | Skoor: 20
+[2025-05-21 22:04:47] Sessioon algas
+[2025-05-21 22:04:47] Alustas stsenaariumit: Kahtlane manus e-kirjas
+[2025-05-21 22:05:17] Stsenaarium katkestatud: Kahtlane manus e-kirjas
+[2025-05-21 22:05:24] Sessioon lõppes | Kestus: 2 minutit | Läbitud stsenaariumid: 0 | Koguskoor: 0
+[2025-05-21 22:05:47] Sessioon algas
+[2025-05-21 22:05:47] Sisenes mängu
+[2025-05-21 22:06:02] Sessioon lõppes | Kestus: 0 minutit | Läbitud stsenaariumid: 2 | Koguskoor: 50

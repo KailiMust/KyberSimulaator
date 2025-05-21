@@ -164,4 +164,76 @@ public class Stsenaarium {
     public String getKategooria() {
         return kategooria;
     }
+
+    /**
+     * Tagastab stsenaariumi kirjelduse.
+     *
+     * @return stsenaariumi kirjeldus
+     */
+    public String getKirjeldus() {
+        return kirjeldus;
+    }
+
+    /**
+     * Tagastab stsenaariumi kokkuvõtte.
+     *
+     * @return stsenaariumi kokkuvõte
+     */
+    public String getKokkuvõte() {
+        // Loome kokkuvõtte sõltuvalt kategooriast
+        StringBuilder kokkuvõte = new StringBuilder();
+
+        switch (kategooria.toLowerCase()) {
+            case "phishing":
+                kokkuvõte.append("Phishing on üks levinumaid küberohte, kus petturid püüavad inimesi petta, et saada ")
+                        .append("ligipääsu tundlikele andmetele, kasutajanimedele või paroolidele.\n\n")
+                        .append("PARIMAD TAVAD:\n")
+                        .append("- Kontrolli alati e-kirja saatja aadress hoolikalt\n")
+                        .append("- Ole ettevaatlik kahtlaste linkide ja manustega\n")
+                        .append("- Ära kunagi avalda tundlikku infot ilma saatja identiteeti kontrollimata");
+                break;
+
+            case "võrguturve":
+                kokkuvõte.append("Võrguturve hõlmab meetmeid, mis tagavad sinu arvutivõrgu ja andmete kaitse ")
+                        .append("volitamata juurdepääsu ja rünnakute eest.\n\n")
+                        .append("PARIMAD TAVAD:\n")
+                        .append("- Kasuta alati tugevat WiFi parooli ja WPA2/WPA3 krüpteeringut\n")
+                        .append("- Hoia kõik võrguseadmed (ruuterid jms) uuendatuna\n")
+                        .append("- Kasuta VPN-i avalikes WiFi võrkudes");
+                break;
+
+            case "sotsiaalne manipulatsioon":
+                kokkuvõte.append("Sotsiaalne manipulatsioon kasutab psühholoogilisi võtteid, et meelitada inimesi ")
+                        .append("avaldama tundlikku infot või teostama tegevusi, mis kompromiteerivad turvalisust.\n\n")
+                        .append("PARIMAD TAVAD:\n")
+                        .append("- Kontrolli alati isikutuvastust, kui keegi küsib tundlikku infot\n")
+                        .append("- Ole kahtlustav ootamatute kõnede või külastuste suhtes\n")
+                        .append("- Järgi alati ettevõtte turvaprotokolle");
+                break;
+
+            case "süsteemi turvalisus":
+                kokkuvõte.append("Süsteemi turvalisus hõlmab teie arvuti ja tarkvara kaitsmist pahavara, viiruste ja ")
+                        .append("teiste ohtude eest.\n\n")
+                        .append("PARIMAD TAVAD:\n")
+                        .append("- Hoia operatsioonisüsteem ja tarkvara alati uuendatuna\n")
+                        .append("- Kasuta tugevat viirusetõrjet ja pahavaratõrjet\n")
+                        .append("- Varunda regulaarselt olulised andmed");
+                break;
+
+            default:
+                kokkuvõte.append("Küberturvalisus on iga kasutaja vastutus. Hoides end kursis ohtude ja ")
+                        .append("kaitsevahenditega, saad kaitsta ennast ja oma organisatsiooni.");
+        }
+
+        return kokkuvõte.toString();
+    }
+
+    /**
+     * Tagastab stsenaariumi küsimused.
+     *
+     * @return stsenaariumi küsimuste loend
+     */
+    public List<Küsimus> getKüsimused() {
+        return küsimused;
+    }
 }

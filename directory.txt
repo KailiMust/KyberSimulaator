@@ -1,0 +1,18 @@
+project-root/
+├── pom.xml
+├── src/
+│   ├── KüberSimulaatorFX.java
+│   ├── KüberSimulaator.java
+│   ├── Stsenaarium.java
+│   └── ... (other Java source files)
+└── resources/
+    ├── styles.css
+    └── ... (any other resource files)
+└── data/
+    └── players/
+        ├── <player1 name>/
+        │   ├── log.txt
+        │   └── ... (other player data files)
+        └── <player2 name>/
+            ├── log.txt
+            └── ... (other player data files)

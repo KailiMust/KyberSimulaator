@@ -3,7 +3,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Küsimus klass esindab stsenaariumis otsustuskohta, kus kasutaja peab
@@ -22,8 +21,7 @@ public class Küsimus {
     /** Täiendav teave, mida kasutaja saab pärida */
     private Map<String, String> lisaInfo;
 
-    /** Juhuslike valikute genereerimiseks */
-    private static final Random random = new Random();
+    // Removed unused Random field
 
     /**
      * Konstruktor, mis loob uue küsimuse.
@@ -131,5 +129,23 @@ public class Küsimus {
             kasutajaLiides.näitaViga("Teemat '" + teema + "' ei leitud. Saadaval teemad: " +
                     String.join(", ", lisaInfo.keySet()));
         }
+    }
+    
+    /**
+     * Tagastab küsimuse teksti.
+     *
+     * @return küsimuse tekst
+     */
+    public String getKüsimusTekst() {
+        return küsimusTekst;
+    }
+    
+    /**
+     * Tagastab küsimuse vastusevariandid.
+     *
+     * @return vastusevariandid
+     */
+    public List<Valik> getValikud() {
+        return valikud;
     }
 }

@@ -68,4 +68,31 @@ public class Valik {
     public int getSkoor() {
         return turvalisusSkoor;
     }
+    
+    /**
+     * Tagastab valiku tagajärje.
+     *
+     * @return valiku tagajärg
+     */
+    public String getTagajärg() {
+        return tagajärg;
+    }
+    
+    /**
+     * Tagastab valiku selgituse.
+     *
+     * @return valiku selgitus
+     */
+    public String getSelgitus() {
+        return selgitus;
+    }
+    
+    /**
+     * Tagastab valiku turvalisusstkoori.
+     *
+     * @return valiku turvalisusskoor
+     */
+    public int getTurvalisusSkoor() {
+        return turvalisusSkoor;
+    }
 }
