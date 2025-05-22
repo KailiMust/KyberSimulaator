@@ -188,13 +188,13 @@ public class KasutajaProfiil {
             return null;
         }
     }
-    
+
     /**
-     * Tagastab kõigi olemasolevate mängijate nimed.
+     * Tagastab kõigi olemasolevate mängijate nimed tähestikujärjekorras.
      *
-     * @return mängijate nimede loend
+     * @return sorteeritud mängijate nimede loend
      */
-    public static List<String> saaOlemasolevadMängijad() {
+    public static List<String> saaOlemasolevadMängijadSorteeritult() {
         List<String> mängijad = new ArrayList<>();
         
         File kasutajadKaust = new File(ANDMETE_KAUST);
@@ -211,6 +211,9 @@ public class KasutajaProfiil {
                 }
             }
         }
+        
+        // Sorteerime tähestikujärjekorda
+        mängijad.sort(String.CASE_INSENSITIVE_ORDER);
         
         return mängijad;
     }

@@ -130,6 +130,14 @@ public class KüberSimulaatorFX extends Application {
             if (event.getCode() == KeyCode.ESCAPE) Platform.exit();
         });
         
+        // Määrame fookuse ListView-le pärast stseeni laadimist
+        Platform.runLater(() -> {
+            // Otsime ListView komponenti ja määrame sellele fookuse
+            stseen.getRoot().lookupAll(".list-view").stream()
+                  .findFirst()
+                  .ifPresent(node -> node.requestFocus());
+        });
+        
         return stseen;
     }
     
@@ -140,7 +148,7 @@ public class KüberSimulaatorFX extends Application {
         VBox sisu = new VBox(15);
         sisu.setAlignment(Pos.CENTER);
         
-        List<String> olemasolevadMängijad = KasutajaProfiil.saaOlemasolevadMängijad();
+        List<String> olemasolevadMängijad = KasutajaProfiil.saaOlemasolevadMängijadSorteeritult();
         
         if (!olemasolevadMängijad.isEmpty()) {
             sisu.getChildren().addAll(
@@ -172,12 +180,37 @@ public class KüberSimulaatorFX extends Application {
         loend.setPrefHeight(200);
         loend.prefWidthProperty().bind(Bindings.max(300, konteiner.widthProperty().multiply(0.8)));
         
+        // Valime automaatselt esimese mängija
+        if (!mängijad.isEmpty()) {
+            loend.getSelectionModel().selectFirst();
+        }
+        
         Button valiBtn = looKohandatudNupp("Vali mängija", 200, konteiner, _ -> {
             String valitud = loend.getSelectionModel().getSelectedItem();
             if (valitud != null) {
                 valiMängija(valitud);
             } else {
                 näitaViga("Palun vali mängija loendist");
+            }
+        });
+        
+        // Enter-klahvi tugi
+        loend.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String valitud = loend.getSelectionModel().getSelectedItem();
+                if (valitud != null) {
+                    valiMängija(valitud);
+                }
+            }
+        });
+        
+        // Topelt-klõpsu tugi
+        loend.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                String valitud = loend.getSelectionModel().getSelectedItem();
+                if (valitud != null) {
+                    valiMängija(valitud);
+                }
             }
         });
         
