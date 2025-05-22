@@ -217,4 +217,49 @@ public class KasutajaProfiil {
         
         return mängijad;
     }
+
+    /**
+     * Kustutab kasutajaprofiili ja kõik sellega seotud andmed.
+     *
+     * @param nimi kustutatava kasutaja nimi
+     * @return true kui kustutamine õnnestus, false vastasel juhul
+     */
+    public static boolean kustutaProfiil(String nimi) {
+        if (nimi == null || nimi.trim().isEmpty()) {
+            return false;
+        }
+        
+        File kasutajaKaust = new File(ANDMETE_KAUST + nimi);
+        
+        if (!kasutajaKaust.exists()) {
+            return false; // Kasutajat pole olemas
+        }
+        
+        return kustutaKaustRekursiivselt(kasutajaKaust);
+    }
+
+    /**
+     * Kustutab kausta ja kõik selle sisu rekursiivselt.
+     *
+     * @param kaust kustutatav kaust
+     * @return true kui kustutamine õnnestus, false vastasel juhul
+     */
+    private static boolean kustutaKaustRekursiivselt(File kaust) {
+        if (!kaust.exists()) {
+            return true;
+        }
+        
+        if (kaust.isDirectory()) {
+            File[] failid = kaust.listFiles();
+            if (failid != null) {
+                for (File fail : failid) {
+                    if (!kustutaKaustRekursiivselt(fail)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        
+        return kaust.delete();
+    }
 }

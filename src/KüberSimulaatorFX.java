@@ -13,6 +13,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import model.KasutajaProfiil;
 import model.Stsenaarium;
+import view.MängijaKustutamiseDialoog;
 import view.MängijaLoomisDialoog;
 import view.StatistikaEkraan;
 import view.StsenaariumiEkraan;
@@ -155,6 +156,10 @@ public class KüberSimulaatorFX extends Application {
                 looSubtiitel("Olemasolevad mängijad:"),
                 looMängijateLoend(olemasolevadMängijad, sisu)
             );
+
+            // Mängija kustutamise nupp
+            Button kustutaBtn = looKohandatudNupp("Kustuta mängija", 200, sisu, _ -> kustutaMängija());
+            sisu.getChildren().add(kustutaBtn);
         } else {
             Label teade = new Label("Hetkel pole ühtegi mängijat. Loo uus mängija, et alustada.");
             teade.setWrapText(true);
@@ -254,6 +259,18 @@ public class KüberSimulaatorFX extends Application {
         }
     }
     
+    /**
+     * Avab kasutaja kustutamise dialoogi.
+     */
+    private void kustutaMängija() {
+        MängijaKustutamiseDialoog dialoog = new MängijaKustutamiseDialoog();
+        boolean kasutajaKustutati = dialoog.näitaDialoog(peaLava);
+        
+        if (kasutajaKustutati) {
+            näitaMängijaValikEkraan();
+        }
+    }
+
     /**
      * Näitab peamenüü ekraani.
      */
