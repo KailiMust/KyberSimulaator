@@ -35,7 +35,7 @@ public class MängijaLoomisDialoog {
         dialoogLava.initOwner(omanikLava);
         dialoogLava.setTitle("Loo uus mängija");
         dialoogLava.setMinWidth(350);
-        dialoogLava.setMinHeight(220);
+        dialoogLava.setMinHeight(280);
         
         // Loome komponendid
         VBox juurPaneel = new VBox(15);
@@ -44,6 +44,10 @@ public class MängijaLoomisDialoog {
         
         Label juhisLabel = new Label("Sisesta mängija nimi:");
         juhisLabel.getStyleClass().add("subtitle-label");
+        
+        // Lisame täpsema juhise
+        Label validatsiooniJuhis = new Label("(Ainult tähed ja numbrid, vähemalt 3 märki)");
+        validatsiooniJuhis.setStyle("-fx-font-size: 12px; -fx-text-fill: #666666;");
         
         TextField nimiVäli = new TextField();
         nimiVäli.setPromptText("Mängija nimi");
@@ -68,11 +72,10 @@ public class MängijaLoomisDialoog {
         // Seadistame sündmuste käsitlejad
         looBtn.setOnAction(_ -> {
             String nimi = nimiVäli.getText().trim();
-            if (nimi.isEmpty()) {
-                veaLabel.setText("Nimi ei saa olla tühi!");
-                veaLabel.setVisible(true);
-            } else if (nimi.length() < 3) {
-                veaLabel.setText("Nimi peab olema vähemalt 3 tähemärki pikk!");
+            String viga = valideerNimi(nimi);
+            
+            if (viga != null) {
+                veaLabel.setText(viga);
                 veaLabel.setVisible(true);
             } else {
                 this.mängijaNimi = nimi;
@@ -98,11 +101,10 @@ public class MängijaLoomisDialoog {
         Platform.runLater(() -> nimiVäli.requestFocus());
         
         // Loome paigutuse
-        juurPaneel.getChildren().addAll(juhisLabel, nimiVäli, veaLabel, nupudRida);
+        juurPaneel.getChildren().addAll(juhisLabel, validatsiooniJuhis, nimiVäli, veaLabel, nupudRida);
         
         // Seadistame stseeni ja lisame CSS
         Scene stseen = new Scene(juurPaneel);
-        // Kuna see on eraldi klass, peame lisama CSS-i otse
         stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         dialoogLava.setScene(stseen);
         
@@ -110,5 +112,42 @@ public class MängijaLoomisDialoog {
         dialoogLava.showAndWait();
         
         return mängijaNimi;
+    }
+    
+    /**
+     * Valideerib mängija nime rangelt.
+     * Lubatud on ainult tähed (a-z, A-Z, ä, ö, ü, õ) ja numbrid (0-9).
+     * 
+     * @param nimi valideeritav nimi
+     * @return veateade või null, kui nimi on kehtiv
+     */
+    private String valideerNimi(String nimi) {
+        // Kontrollime, kas nimi on tühi
+        if (nimi == null || nimi.isEmpty()) {
+            return "Nimi ei saa olla tühi!";
+        }
+        
+        // Kontrollime minimaalset pikkust
+        if (nimi.length() < 3) {
+            return "Nimi peab olema vähemalt 3 tähemärki pikk!";
+        }
+        
+        // Kontrollime maksimaalset pikkust
+        if (nimi.length() > 25) {
+            return "Nimi ei saa olla pikem kui 25 tähemärki!";
+        }
+        
+        // Kontrollime, et nimi sisaldaks ainult lubatud märke
+        if (!nimi.matches("[a-zA-ZäöüõÄÖÜÕ0-9]+")) {
+            return "Nimi võib sisaldada ainult tähti ja numbreid!\nTühikud, kirjavahemärgid ja erimärgid pole lubatud.";
+        }
+        
+        // Kontrollime, et ei koosneks ainult numbritest
+        if (nimi.matches("^[0-9]+$")) {
+            return "Nimi ei saa koosneda ainult numbritest!";
+        }
+        
+        // Kui jõudsime siia, on nimi kehtiv
+        return null;
     }
 }
