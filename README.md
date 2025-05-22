@@ -7,29 +7,29 @@
 ## Projekti põhjalik kirjeldus
 
 ### Programmi eesmärk
-Küberturvalisuse Stsenaariumi Simulaator on tekstipõhine õppeprogramm, mis võimaldab kasutajal harjutada küberturvalisuse olukordades otsuste tegemist. Programm esitab kasutajale erinevaid küberturvalisuse stsenaariumeid (nt phishing e-kirjad, paroolide turvalisus), laseb kasutajal teha valikuid ja annab tagasisidet valikute tulemuslikkuse kohta.
+Küberturvalisuse Stsenaariumi Simulaator on tekstipõhine õppeprogramm, mis võimaldab kasutajal harjutada küberturvalisuse olukordades otsuste tegemist. Programm esitab kasutajale erinevaid küberturvalisuse stsenaariumeid (nt phishing e-kirjad, paroolide turvalisus), laseb kasutajal teha valikuid ning annab tagasisidet valikute tulemuslikkuse kohta.
 
 Programmi peamine eesmärk on:
-1. Õpetada küberturvalisuse põhimõtteid praktiliste stsenaariumite kaudu
-2. Arendada kasutaja oskust tuvastada erinevaid küberohte
-3. Harjutada turvaküsimustele reageerimist turvalisus keskkonnas
-4. Tutvustada parimaid tavasid erinevate küberturvalisuse olukordade lahendamisel
+1. Õpetada küberturvalisuse põhimõtteid praktiliste stsenaariumite kaudu.
+2. Arendada kasutaja oskust tuvastada erinevaid küberohte.
+3. Harjutada turvaküsimustele reageerimist.
+4. Tutvustada parimaid tavasid erinevate küberturvalisuse olukordade lahendamisel.
 
 ### Programmi üldine tööpõhimõte
 Programm töötab tekstipõhise simulatsioonina, kus:
 
 1. Kasutajale kuvatakse peamenüü, kust ta saab valida:
     - Juhusliku stsenaariumi käivitamise
-    - Stsenaariumi valimine kategooria järgi
-    - Juhiste kuvamine
-    - Programmist väljumine
+    - Stsenaariumi valimise kategooria alusel
+    - Juhiste kuvamise
+    - Programmist väljumise
 
 2. Stsenaariumite käivitamisel:
     - Näidatakse stsenaariumite kirjeldust (nt "Oled IT-turvaspetsialist ja finantsosakonna töötaja edastab sulle kahtlase e-kirja")
-    - Esitatakse küsimusi, millele kasutaja peab vastama
-    - Igal küsimusel on mitu valikvastust
+    - Esitatakse küsimusi, millele kasutajal tuleb vastata
+    - Igal küsimusel on üks või mitu valikvastust
     - Kasutaja saab küsida lisaküsimusi või lisateavet, sisestades "?info [teema]"
-    - Kasutaja valikule vastavalt kuvatakse tagajärg ja õpetlik selgitus
+    - Kasutaja valikule vastavalt kuvatakse tagajärg või õpetlik selgitus
 
 3. Pärast stsenaariumi läbimist:
     - Näidatakse kokkuvõtet
