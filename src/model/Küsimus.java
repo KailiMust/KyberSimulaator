@@ -9,27 +9,17 @@ import view.KasutajaLiides;
 
 /**
  * Küsimus klass esindab stsenaariumis otsustuskohta, kus kasutaja peab
- * valima mitme võimaluse vahel. Klass haldab küsimuse esitamist ja
- * kasutaja vastuse töötlemist.
+ * valima mitme võimaluse vahel. Optimeeritud versioon vähem koodiridadega.
  *
  * @author Kevin Laig, Kaili Must
  */
 public class Küsimus {
-    /** Küsimuse tekst */
-    private String küsimusTekst;
-
-    /** Vastusevariandid */
-    private List<Valik> valikud;
-
-    /** Täiendav teave, mida kasutaja saab pärida */
-    private Map<String, String> lisaInfo;
-
-    // Removed unused Random field
+    private final String küsimusTekst;
+    private final List<Valik> valikud;
+    private final Map<String, String> lisaInfo;
 
     /**
      * Konstruktor, mis loob uue küsimuse.
-     *
-     * @param küsimusTekst küsimuse tekst
      */
     public Küsimus(String küsimusTekst) {
         this.küsimusTekst = küsimusTekst;
@@ -39,8 +29,6 @@ public class Küsimus {
 
     /**
      * Lisab küsimusele vastusevariandi.
-     *
-     * @param valik lisatav valik
      */
     public void lisaValik(Valik valik) {
         valikud.add(valik);
@@ -48,9 +36,6 @@ public class Küsimus {
 
     /**
      * Lisab täiendava teabe, mida kasutaja saab pärida ?info käsuga.
-     *
-     * @param võti teabe võti (nt "saatja")
-     * @param väärtus teabe väärtus (nt info saatja kohta)
      */
     public void lisaInfo(String võti, String väärtus) {
         lisaInfo.put(võti.toLowerCase(), väärtus);
@@ -59,71 +44,70 @@ public class Küsimus {
     /**
      * Esitab küsimuse ja tagastab kasutaja valiku.
      * Valikud esitatakse juhuslikus järjekorras.
-     *
-     * @param kasutajaLiides kasutajaliides suhtlemiseks
-     * @return kasutaja tehtud valik või null, kui kasutaja tahab väljuda
      */
     public Valik esitaJaSaaValik(KasutajaLiides kasutajaLiides) {
-        // Segame valikud juhuslikus järjekorras
         List<Valik> segatud = new ArrayList<>(valikud);
         Collections.shuffle(segatud);
 
         while (true) {
-            // Näitame küsimuse teksti
-            kasutajaLiides.näitaTeade("\n" + küsimusTekst);
-
-            // Näitame valikuvariante
-            for (int i = 0; i < segatud.size(); i++) {
-                kasutajaLiides.näitaTeade((i+1) + ". " + segatud.get(i).getTekst());
-            }
-
-            // Näitame infot lisainfo küsimise kohta, kui see on saadaval
-            if (!lisaInfo.isEmpty()) {
-                kasutajaLiides.näitaTeade("\nLisainfo küsimiseks kirjuta: ?info [teema]");
-                kasutajaLiides.näitaTeade("Saadaval teemad: " + String.join(", ", lisaInfo.keySet()));
-            }
-
-            // Küsime kasutaja vastust
+            näitaKüsimusJaValikud(kasutajaLiides, segatud);
             String sisend = kasutajaLiides.küsiSisend("\nSinu valik (1-" + segatud.size() + "):");
 
-            // Kontrollime, kas kasutaja tahab lisainfot
+            // Kontrolli erijuhud
             if (sisend.startsWith("?info")) {
-                String teema = sisend.substring(5).trim().toLowerCase();
-                näitaLisaInfot(teema, kasutajaLiides);
+                näitaLisaInfot(sisend.substring(5).trim().toLowerCase(), kasutajaLiides);
                 continue;
             }
-
-            // Kontrollime, kas kasutaja tahab väljuda
+            
             if (sisend.equalsIgnoreCase("välju")) {
                 return null;
             }
 
-            // Proovime tõlgendada sisendi numbrina
-            try {
-                int valikuIndeks = Integer.parseInt(sisend) - 1;
-
-                // Kontrollime, kas valik on kehtiv
-                if (valikuIndeks >= 0 && valikuIndeks < segatud.size()) {
-                    Valik valitud = segatud.get(valikuIndeks);
-
-                    // Näitame valiku tulemust
-                    valitud.näitaTulemus(kasutajaLiides);
-
-                    return valitud;
-                } else {
-                    kasutajaLiides.näitaViga("Palun vali kehtiv number 1-" + segatud.size());
-                }
-            } catch (NumberFormatException e) {
-                kasutajaLiides.näitaViga("Palun sisesta number või ?info [teema]");
+            // Proovi tõlgendada numbrina
+            Valik valitud = püüaValidaJaTagastaValik(sisend, segatud, kasutajaLiides);
+            if (valitud != null) {
+                valitud.näitaTulemus(kasutajaLiides);
+                return valitud;
             }
         }
     }
 
     /**
+     * Näitab küsimuse teksti ja valikuvariante.
+     */
+    private void näitaKüsimusJaValikud(KasutajaLiides liides, List<Valik> segatud) {
+        liides.näitaTeade("\n" + küsimusTekst);
+        
+        for (int i = 0; i < segatud.size(); i++) {
+            liides.näitaTeade((i + 1) + ". " + segatud.get(i).getTekst());
+        }
+        
+        if (!lisaInfo.isEmpty()) {
+            liides.näitaTeade("\nLisainfo küsimiseks kirjuta: ?info [teema]");
+            liides.näitaTeade("Saadaval teemad: " + String.join(", ", lisaInfo.keySet()));
+        }
+    }
+
+    /**
+     * Püüab validada sisendi ja tagastada vastava valiku.
+     */
+    private Valik püüaValidaJaTagastaValik(String sisend, List<Valik> segatud, KasutajaLiides liides) {
+        try {
+            int valikuIndeks = Integer.parseInt(sisend) - 1;
+            
+            if (valikuIndeks >= 0 && valikuIndeks < segatud.size()) {
+                return segatud.get(valikuIndeks);
+            } else {
+                liides.näitaViga("Palun vali kehtiv number 1-" + segatud.size());
+            }
+        } catch (NumberFormatException e) {
+            liides.näitaViga("Palun sisesta number või ?info [teema]");
+        }
+        return null;
+    }
+
+    /**
      * Näitab küsitud lisateavet.
-     *
-     * @param teema soovitud teema
-     * @param kasutajaLiides kasutajaliides suhtlemiseks
      */
     private void näitaLisaInfot(String teema, KasutajaLiides kasutajaLiides) {
         if (lisaInfo.containsKey(teema)) {
@@ -134,21 +118,7 @@ public class Küsimus {
         }
     }
     
-    /**
-     * Tagastab küsimuse teksti.
-     *
-     * @return küsimuse tekst
-     */
-    public String getKüsimusTekst() {
-        return küsimusTekst;
-    }
-    
-    /**
-     * Tagastab küsimuse vastusevariandid.
-     *
-     * @return vastusevariandid
-     */
-    public List<Valik> getValikud() {
-        return valikud;
-    }
+    // Getterid
+    public String getKüsimusTekst() { return küsimusTekst; }
+    public List<Valik> getValikud() { return valikud; }
 }

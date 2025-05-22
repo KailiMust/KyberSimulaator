@@ -16,16 +16,9 @@ import model.KasutajaProfiil;
  * @author Kevin Laig, Kaili Must
  */
 public class StatistikaEkraan {
-    /** Peamine lava */
     private final Stage peaLava;
-    
-    /** Mängija nimi */
     private final String mängijaNimi;
-    
-    /** Kasutajaprofiil */
     private final KasutajaProfiil profiil;
-    
-    /** Tagasikutse peamenüüsse naasmiseks */
     private final Runnable tagasiPeamenüüsse;
     
     /**
@@ -42,47 +35,45 @@ public class StatistikaEkraan {
         
         // Laeme kasutajaprofiili
         KasutajaProfiil laetudProfiil = KasutajaProfiil.laeProfiil(mängijaNimi);
-        if (laetudProfiil != null) {
-            this.profiil = laetudProfiil;
-        } else {
-            this.profiil = new KasutajaProfiil(mängijaNimi);
-        }
+        this.profiil = (laetudProfiil != null) ? laetudProfiil : new KasutajaProfiil(mängijaNimi);
     }
     
     /**
      * Näitab statistika ekraani.
      */
     public void näita() {
+        Scene stseen = looStatistikaEkraan();
+        lisaCSS(stseen);
+        peaLava.setScene(stseen);
+    }
+    
+    /**
+     * Loob statistika ekraani.
+     */
+    private Scene looStatistikaEkraan() {
         BorderPane juurPaneel = new BorderPane();
         juurPaneel.setPadding(new Insets(20));
         
-        // Pealkirja paneel
+        // Pealkiri
         Label pealkiri = new Label("Mängija statistika");
-        pealkiri.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
         
-        // Statistika paneel
+        // Statistika paneel klaasipaneelina
         VBox statistikaPaneel = new VBox(15);
-        statistikaPaneel.setPadding(new Insets(20, 0, 20, 0));
+        statistikaPaneel.getStyleClass().add("glass-pane");
         statistikaPaneel.setAlignment(Pos.CENTER);
         
-        Label mängijaNimiLabel = new Label("Mängija: " + mängijaNimi);
-        mängijaNimiLabel.setStyle("-fx-font-size: 18px;");
+        // Statistika info
+        statistikaPaneel.getChildren().addAll(
+            looInfoLabel("Mängija: " + mängijaNimi, "18px"),
+            looInfoLabel("Koguskoor: " + profiil.getKoguSkoor() + " punkti", "18px"),
+            looInfoLabel("Läbitud stsenaariumid: " + profiil.getLäbitudStsenaariumiteArv(), "16px"),
+            looInfoLabel("Ebaõnnestunud stsenaariumid: " + profiil.getEbaõnnestunudStsenaariumiteArv(), "16px")
+        );
         
-        Label koguSkoorLabel = new Label("Koguskoor: " + profiil.getKoguSkoor() + " punkti");
-        koguSkoorLabel.setStyle("-fx-font-size: 18px;");
-        
-        Label läbitudLabel = new Label("Läbitud stsenaariumid: " + profiil.getLäbitudStsenaariumiteArv());
-        läbitudLabel.setStyle("-fx-font-size: 16px;");
-        
-        Label ebaõnnestunudLabel = new Label("Ebaõnnestunud stsenaariumid: " + profiil.getEbaõnnestunudStsenaariumiteArv());
-        ebaõnnestunudLabel.setStyle("-fx-font-size: 16px;");
-        
-        // Lihtne visuaalne esitus
-        Label visuaalneLabel = new Label("Edukuse määr: ");
-        visuaalneLabel.setStyle("-fx-font-size: 16px;");
-        
+        // Lisa edukuse määr, kui on andmeid
         int läbitud = profiil.getLäbitudStsenaariumiteArv();
         int ebaõnnestunud = profiil.getEbaõnnestunudStsenaariumiteArv();
         int kokku = läbitud + ebaõnnestunud;
@@ -90,28 +81,38 @@ public class StatistikaEkraan {
         if (kokku > 0) {
             double edukuseMäär = (double) läbitud / kokku;
             String edukuseProtsent = String.format("%.1f", edukuseMäär * 100);
-            
-            Label edukuseLabel = new Label("Edukuse määr: " + edukuseProtsent + "%");
-            edukuseLabel.setStyle("-fx-font-size: 16px;");
-            statistikaPaneel.getChildren().add(edukuseLabel);
+            statistikaPaneel.getChildren().add(
+                looInfoLabel("Edukuse määr: " + edukuseProtsent + "%", "16px")
+            );
         }
         
-        statistikaPaneel.getChildren().addAll(mängijaNimiLabel, koguSkoorLabel, läbitudLabel, ebaõnnestunudLabel);
         juurPaneel.setCenter(statistikaPaneel);
         
-        // Nuppude paneel
-        VBox nupudPaneel = new VBox(15);
-        nupudPaneel.setAlignment(Pos.CENTER);
-        
+        // Tagasi nupp
         Button tagasiBtn = new Button("Tagasi peamenüüsse");
         tagasiBtn.setPrefWidth(200);
         tagasiBtn.setOnAction(_ -> tagasiPeamenüüsse.run());
         
-        nupudPaneel.getChildren().add(tagasiBtn);
+        VBox nupudPaneel = new VBox(tagasiBtn);
+        nupudPaneel.setAlignment(Pos.CENTER);
         juurPaneel.setBottom(nupudPaneel);
         
-        // Loome stseeni
-        Scene stseen = new Scene(juurPaneel);
-        peaLava.setScene(stseen);
+        return new Scene(juurPaneel);
+    }
+    
+    /**
+     * Loob info labeli määratud stiili ja teksti suurusega.
+     */
+    private Label looInfoLabel(String tekst, String suurus) {
+        Label label = new Label(tekst);
+        label.setStyle("-fx-font-size: " + suurus + ";");
+        return label;
+    }
+    
+    /**
+     * Lisab stseenile CSS stiilid.
+     */
+    private void lisaCSS(Scene stseen) {
+        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
     }
 }
