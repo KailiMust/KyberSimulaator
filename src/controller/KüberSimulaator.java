@@ -1,3 +1,7 @@
+package controller;
+import model.Stsenaarium;
+import view.KasutajaLiides;
+
 /**
  * KüberSimulaator on programmi peaklass, mis käivitab küberturvalisuse
  * stsenaariumi simulaatori ja koordineerib teiste klasside tööd.

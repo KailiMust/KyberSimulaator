@@ -1,0 +1,11 @@
+[2025-05-22 10:46:26] Sessioon algas
+[2025-05-22 10:46:26] Loodud uus mängija
+[2025-05-22 10:46:52] Sessioon algas
+[2025-05-22 10:46:52] Alustas stsenaariumit: Kahtlane manus e-kirjas
+[2025-05-22 10:47:12] Mängija kartul vaatas lisainfot küsimuse kohta
+[2025-05-22 10:47:16] Stsenaarium: Kahtlane manus e-kirjas | Küsimus: Mida peaksid tegema nakatunud arvutiga? | Valik: Eralda arvuti koheselt võrgust ja käivita antiviiruseprogramm
+[2025-05-22 10:47:19] Stsenaarium: Kahtlane manus e-kirjas | Küsimus: Kuidas peaksid käituma teiste töötajate ja nende arvutitega? | Valik: Keela ajutiselt kõik e-posti manused, tee süsteemne kontroll kõigile seadmetele ja korralda kiirkoolitus
+[2025-05-22 10:47:20] Stsenaarium lõpetatud: Kahtlane manus e-kirjas | Skoor: 15
+[2025-05-22 11:27:25] Sessioon algas
+[2025-05-22 11:27:25] Sisenes mängu
+[2025-05-22 11:27:29] Väljus peamenüüsse

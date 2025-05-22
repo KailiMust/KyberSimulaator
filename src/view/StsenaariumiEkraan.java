@@ -1,18 +1,31 @@
+package view;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.KasutajaProfiil;
+import model.Küsimus;
+import model.Stsenaarium;
+import model.Valik;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import controller.LogiHaldur;
 
 /**
  * StsenaariumiEkraan klass haldab stsenaariumi kuvamist JavaFX kasutajaliideses.
@@ -84,7 +97,7 @@ public class StsenaariumiEkraan {
         
         // Pealkirja paneel
         Label pealkiri = new Label(stsenaarium.getPealkiri());
-        pealkiri.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
         
@@ -96,13 +109,25 @@ public class StsenaariumiEkraan {
         kirjeldus.setWrapText(true);
         kirjeldus.setEditable(false);
         kirjeldus.setPrefHeight(100);
+        kirjeldus.getStyleClass().add("scenario-description");
+        
+        // Lisa responsiivne suurus
+        kirjeldus.minHeightProperty().bind(
+            Bindings.max(100, kirjeldusPaneel.heightProperty().multiply(0.3))
+        );
         
         kirjeldusPaneel.getChildren().add(kirjeldus);
-        juurPaneel.setCenter(kirjeldusPaneel);
+        
+        // Lisame ScrollPane, et tagada nähtavus
+        ScrollPane kerimisAla = new ScrollPane(kirjeldusPaneel);
+        kerimisAla.setFitToWidth(true);
+        kerimisAla.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel
         HBox nupudPaneel = new HBox(15);
         nupudPaneel.setAlignment(Pos.CENTER);
+        nupudPaneel.setPadding(new Insets(15, 0, 0, 0));
         
         Button jätkaBtn = new Button("Alusta");
         jätkaBtn.setPrefWidth(150);
@@ -115,8 +140,19 @@ public class StsenaariumiEkraan {
         nupudPaneel.getChildren().addAll(jätkaBtn, väljuBtn);
         juurPaneel.setBottom(nupudPaneel);
         
-        // Loome stseeni
+        // Loome stseeni ja lisame CSS
         Scene stseen = new Scene(juurPaneel);
+        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        
+        // Lisa klaviatuuri tugi
+        stseen.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                katkestaStsenaarium();
+            } else if (event.getCode() == KeyCode.ENTER) {
+                näitaJärgmineKüsimus();
+            }
+        });
+        
         peaLava.setScene(stseen);
     }
     
@@ -139,7 +175,7 @@ public class StsenaariumiEkraan {
         
         // Pealkirja paneel
         Label pealkiri = new Label(stsenaarium.getPealkiri() + " - Küsimus " + küsimuseIndeks);
-        pealkiri.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
         
@@ -152,13 +188,13 @@ public class StsenaariumiEkraan {
         kirjeldusPaneel.setPadding(new Insets(0, 0, 10, 0));
         
         Label kirjeldusLabel = new Label("Stsenaariumi kirjeldus:");
-        kirjeldusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        kirjeldusLabel.getStyleClass().add("subtitle-label");
         
         TextArea kirjeldus = new TextArea(stsenaarium.getKirjeldus());
         kirjeldus.setWrapText(true);
         kirjeldus.setEditable(false);
         kirjeldus.setPrefHeight(80);
-        kirjeldus.setStyle("-fx-control-inner-background: #f8f8f8; -fx-background-color: #f0f0f0;");
+        kirjeldus.getStyleClass().add("scenario-description");
         
         kirjeldusPaneel.getChildren().addAll(kirjeldusLabel, kirjeldus);
         keskmineKontainer.getChildren().add(kirjeldusPaneel);
@@ -168,19 +204,21 @@ public class StsenaariumiEkraan {
         küsimusePaneel.setPadding(new Insets(0, 0, 10, 0));
         
         Label küsimusLabel = new Label("Küsimus:");
-        küsimusLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        küsimusLabel.getStyleClass().add("subtitle-label");
         
         Label küsimusTekst = new Label(praeguneKüsimus.getKüsimusTekst());
         küsimusTekst.setWrapText(true);
-        küsimusTekst.setStyle("-fx-font-size: 16px;");
+        küsimusTekst.getStyleClass().add("scenario-question");
         
         küsimusePaneel.getChildren().addAll(küsimusLabel, küsimusTekst);
         keskmineKontainer.getChildren().add(küsimusePaneel);
         
         // Valikute paneel
         VBox valikutePaneel = new VBox(10);
+        valikutePaneel.getStyleClass().add("scenario-options");
+        
         Label valikudLabel = new Label("Valikud:");
-        valikudLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        valikudLabel.getStyleClass().add("subtitle-label");
         valikutePaneel.getChildren().add(valikudLabel);
         
         ToggleGroup valikuGrupp = new ToggleGroup();
@@ -198,7 +236,12 @@ public class StsenaariumiEkraan {
         }
         
         keskmineKontainer.getChildren().add(valikutePaneel);
-        juurPaneel.setCenter(keskmineKontainer);
+        
+        // Lisame ScrollPane, et tagada nähtavus
+        ScrollPane kerimisAla = new ScrollPane(keskmineKontainer);
+        kerimisAla.setFitToWidth(true);
+        kerimisAla.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel
         HBox nupudPaneel = new HBox(15);
@@ -216,6 +259,8 @@ public class StsenaariumiEkraan {
             if (valitudNupp != null) {
                 Valik valitudValik = (Valik) valitudNupp.getUserData();
                 töötleValik(valitudValik);
+            } else {
+                näitaViga("Palun vali üks vastusevariant");
             }
         });
         
@@ -228,6 +273,23 @@ public class StsenaariumiEkraan {
         
         // Loome stseeni
         Scene stseen = new Scene(juurPaneel);
+        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        
+        // Lisa klaviatuuri tugi
+        stseen.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                katkestaStsenaarium();
+            } else if (event.getCode() == KeyCode.ENTER) {
+                RadioButton valitudNupp = (RadioButton) valikuGrupp.getSelectedToggle();
+                if (valitudNupp != null) {
+                    Valik valitudValik = (Valik) valitudNupp.getUserData();
+                    töötleValik(valitudValik);
+                } else {
+                    näitaViga("Palun vali üks vastusevariant");
+                }
+            }
+        });
+        
         peaLava.setScene(stseen);
     }
     
@@ -247,7 +309,7 @@ public class StsenaariumiEkraan {
         
         // Pealkirja paneel
         Label pealkiri = new Label("Lisainfo: " + stsenaarium.getPealkiri());
-        pealkiri.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
         
@@ -283,6 +345,7 @@ public class StsenaariumiEkraan {
         
         // Loome stseeni
         Scene stseen = new Scene(juurPaneel);
+        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         lisainfoLava.setScene(stseen);
         
         // Näitame dialoogi
@@ -310,31 +373,42 @@ public class StsenaariumiEkraan {
         
         // Pealkirja paneel
         Label pealkiri = new Label("Tagajärg");
-        pealkiri.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
         
-        // Tagajärje paneel
+        // Tagajärje paneel klaasipaneelina
         VBox tagajärjePaneel = new VBox(15);
-        tagajärjePaneel.setPadding(new Insets(20, 0, 20, 0));
+        tagajärjePaneel.getStyleClass().add("glass-pane");
+        tagajärjePaneel.setPadding(new Insets(20));
         
         Label tagajärjeTekst = new Label(valik.getTagajärg());
         tagajärjeTekst.setWrapText(true);
-        tagajärjeTekst.setStyle("-fx-font-size: 16px;");
+        tagajärjeTekst.getStyleClass().add("scenario-question");
         
         Label selgitusTekst = new Label(valik.getSelgitus());
         selgitusTekst.setWrapText(true);
-        selgitusTekst.setStyle("-fx-font-size: 14px;");
         
-        Label skoorTekst = new Label("Punktid: " + valik.getTurvalisusSkoor());
+        // Lisa värviline skoor sõltuvalt selle väärtusest
+        Label skoorTekst = new Label("Punktid: " + (valik.getTurvalisusSkoor() >= 0 ? "+" : "") + valik.getTurvalisusSkoor());
         skoorTekst.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        if (valik.getTurvalisusSkoor() > 0) {
+            skoorTekst.getStyleClass().add("result-positive");
+        } else if (valik.getTurvalisusSkoor() < 0) {
+            skoorTekst.getStyleClass().add("result-negative");
+        }
         
         tagajärjePaneel.getChildren().addAll(tagajärjeTekst, selgitusTekst, skoorTekst);
-        juurPaneel.setCenter(tagajärjePaneel);
+        
+        // Lisame ScrollPane
+        ScrollPane kerimisAla = new ScrollPane(tagajärjePaneel);
+        kerimisAla.setFitToWidth(true);
+        juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel
         HBox nupudPaneel = new HBox(15);
         nupudPaneel.setAlignment(Pos.CENTER);
+        nupudPaneel.setPadding(new Insets(15, 0, 0, 0));
         
         Button jätkaBtn = new Button("Jätka");
         jätkaBtn.setPrefWidth(150);
@@ -343,8 +417,17 @@ public class StsenaariumiEkraan {
         nupudPaneel.getChildren().add(jätkaBtn);
         juurPaneel.setBottom(nupudPaneel);
         
-        // Loome stseeni
+        // Loome stseeni ja lisame CSS
         Scene stseen = new Scene(juurPaneel);
+        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        
+        // Lisa klaviatuuri tugi
+        stseen.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                näitaJärgmineKüsimus();
+            }
+        });
+        
         peaLava.setScene(stseen);
     }
     
@@ -363,31 +446,49 @@ public class StsenaariumiEkraan {
         
         // Pealkirja paneel
         Label pealkiri = new Label("Stsenaarium lõpetatud!");
-        pealkiri.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
         
-        // Tulemuste paneel
+        // Tulemuste paneel klaasipaneelina
         VBox tulemusedPaneel = new VBox(15);
-        tulemusedPaneel.setPadding(new Insets(20, 0, 20, 0));
+        tulemusedPaneel.getStyleClass().add("glass-pane");
+        tulemusedPaneel.setPadding(new Insets(20));
         tulemusedPaneel.setAlignment(Pos.CENTER);
         
         Label stsenaariumiNimi = new Label(stsenaarium.getPealkiri());
-        stsenaariumiNimi.setStyle("-fx-font-size: 18px;");
+        stsenaariumiNimi.getStyleClass().add("subtitle-label");
         
+        // Lisa skoor vastava värviga
         Label skoorTekst = new Label("Sinu skoor: " + skoor + " punkti");
         skoorTekst.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        if (skoor > 0) {
+            skoorTekst.getStyleClass().add("result-positive");
+        } else if (skoor < 0) {
+            skoorTekst.getStyleClass().add("result-negative");
+        }
         
-        Label kokkuvõte = new Label(stsenaarium.getKokkuvõte());
-        kokkuvõte.setWrapText(true);
-        kokkuvõte.setStyle("-fx-font-size: 16px;");
+        // Lisa kokkuvõte
+        Label kokkuvõteLabel = new Label("Mida õppisid:");
+        kokkuvõteLabel.getStyleClass().add("subtitle-label");
+        kokkuvõteLabel.setPadding(new Insets(10, 0, 0, 0));
         
-        tulemusedPaneel.getChildren().addAll(stsenaariumiNimi, skoorTekst, kokkuvõte);
-        juurPaneel.setCenter(tulemusedPaneel);
+        TextArea kokkuvõteAla = new TextArea(stsenaarium.getKokkuvõte());
+        kokkuvõteAla.setWrapText(true);
+        kokkuvõteAla.setEditable(false);
+        kokkuvõteAla.setPrefHeight(200);
+        
+        tulemusedPaneel.getChildren().addAll(stsenaariumiNimi, skoorTekst, kokkuvõteLabel, kokkuvõteAla);
+        
+        // Lisame ScrollPane
+        ScrollPane kerimisAla = new ScrollPane(tulemusedPaneel);
+        kerimisAla.setFitToWidth(true);
+        juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel
         VBox nupudPaneel = new VBox(15);
         nupudPaneel.setAlignment(Pos.CENTER);
+        nupudPaneel.setPadding(new Insets(15, 0, 0, 0));
         
         Button uuestiBtn = new Button("Mängi uuesti");
         uuestiBtn.setPrefWidth(200);
@@ -408,8 +509,17 @@ public class StsenaariumiEkraan {
         nupudPaneel.getChildren().addAll(uuestiBtn, uusStsBtn, peamenüüBtn);
         juurPaneel.setBottom(nupudPaneel);
         
-        // Loome stseeni
+        // Loome stseeni ja lisame CSS
         Scene stseen = new Scene(juurPaneel);
+        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        
+        // Lisa klaviatuuri tugi
+        stseen.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                tagasiPeamenüüsse.run();
+            }
+        });
+        
         peaLava.setScene(stseen);
     }
     
@@ -425,5 +535,23 @@ public class StsenaariumiEkraan {
         
         // Naaseme peamenüüsse
         tagasiPeamenüüsse.run();
+    }
+    
+    /**
+     * Näitab veateadet.
+     *
+     * @param veateade näidatav veateade
+     */
+    private void näitaViga(String veateade) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Viga");
+        alert.setHeaderText(null);
+        alert.setContentText(veateade);
+        
+        // Lisa stiilid
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        
+        alert.showAndWait();
     }
 }

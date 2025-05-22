@@ -1,7 +1,10 @@
 NIMI=kevin
-SKOOR=50
+SKOOR=30
 LÄBITUD_STSENAARIUMID=
 Kahtlane manus e-kirjas:20
-Sotsiaalmeedia kontoloomine:30
+Kahtlane e-kiri:5
+Sotsiaalmeedia kontoloomine:0
 EBAÕNNESTUNUD_STSENAARIUMID=
 Kahtlane manus e-kirjas
+Sotsiaalmeedia kontoloomine
+Sotsiaalmeedia kontoloomine

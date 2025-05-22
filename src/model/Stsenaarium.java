@@ -1,5 +1,8 @@
+package model;
 import java.util.ArrayList;
 import java.util.List;
+
+import view.KasutajaLiides;
 
 /**
  * Stsenaarium klass esindab ühte terviklikku küberturvalisuse stsenaariumit

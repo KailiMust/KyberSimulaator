@@ -1,7 +1,12 @@
+package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import model.ParooliStsenaariumid;
+import model.PhishingStsenaariumid;
+import model.Stsenaarium;
 
 /**
  * StsenaariumiHaldur klass haldab kõiki saadaolevaid stsenaariumeid ja

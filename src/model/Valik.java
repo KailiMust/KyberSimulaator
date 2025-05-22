@@ -1,3 +1,6 @@
+package model;
+import view.KasutajaLiides;
+
 /**
  * Valik klass esindab ühte vastusevarianti küsimusele koos tagajärje
  * ja selgitusega. Klass haldab valiku tulemuse näitamist.

@@ -1,0 +1,96 @@
+/* Põhistiilid */
+.root {
+    -fx-background-color: #f0f4f8;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Nuppude stiilid */
+.button {
+    -fx-background-color: #4a6da7;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #3a5d97;
+}
+
+/* Siltide stiilid */
+.label {
+    -fx-text-fill: #333333;
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.subtitle-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Tekstiväljade stiilid */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 2px;
+    -fx-padding: 5px;
+}
+
+/* Raadionuppude stiilid */
+.radio-button {
+    -fx-padding: 5px;
+}
+
+/* Tekstiala stiilid */
+.text-area {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 2px;
+}
+
+/* Loendite stiilid */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 2px;
+}
+
+/* Stsenaariumiekraani stiilid */
+.scenario-description {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px;
+}
+
+.scenario-question {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0;
+}
+
+.scenario-options {
+    -fx-spacing: 10px;
+    -fx-padding: 10px 0;
+}
+
+/* Tulemuste stiilid */
+.result-positive {
+    -fx-text-fill: #2e7d32;
+}
+
+.result-negative {
+    -fx-text-fill: #c62828;
+}
+
+/* Paneel aknaklaasiga */
+.glass-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+    -fx-padding: 15px;
+}
