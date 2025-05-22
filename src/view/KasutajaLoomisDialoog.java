@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -37,6 +38,13 @@ public class KasutajaLoomisDialoog {
         dialoogLava.setMinWidth(350);
         dialoogLava.setMinHeight(280);
         
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+            dialoogLava.getIcons().add(icon);
+        } catch (Exception e) {
+            System.err.println("Hoiatus: Ikooni laadimine ebaõnnestus dialoogile: " + e.getMessage());
+        }
+
         // Loome komponendid
         VBox juurPaneel = new VBox(15);
         juurPaneel.setPadding(new Insets(20));

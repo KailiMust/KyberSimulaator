@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -52,7 +53,14 @@ public class KasutajaKustutamiseDialoog {
         dialoogLava.setTitle("Kustuta kasutaja");
         dialoogLava.setMinWidth(400);
         dialoogLava.setMinHeight(350);
-        
+
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+            dialoogLava.getIcons().add(icon);
+        } catch (Exception e) {
+            System.err.println("Hoiatus: Ikooni laadimine ebaõnnestus dialoogile: " + e.getMessage());
+        }
+
         // Loome komponendid
         VBox juurPaneel = new VBox(15);
         juurPaneel.setPadding(new Insets(20));
@@ -154,6 +162,18 @@ public class KasutajaKustutamiseDialoog {
         kinnitusDialoog.setContentText("Kas soovid tõesti kustutada kasutaja '" + kasutajaNimi + "'?\n\n" +
                 "Kõik tema andmed kustutatakse jäädavalt ja seda ei saa tagasi võtta!");
         
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+            Stage alertStage = (Stage) kinnitusDialoog.getDialogPane().getScene().getWindow();
+            kinnitusDialoog.showingProperty().addListener((_, _, isShowing) -> {
+                if (isShowing) {
+                    alertStage.getIcons().add(icon);
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Hoiatus: Ikooni laadimine ebaõnnestus kinnitusdialoogi jaoks: " + e.getMessage());
+        }
+
         ButtonType jahNupp = new ButtonType("Jah, kustuta");
         ButtonType eiNupp = new ButtonType("Ei, tühista");
         kinnitusDialoog.getButtonTypes().setAll(jahNupp, eiNupp);
@@ -175,6 +195,19 @@ public class KasutajaKustutamiseDialoog {
                       tüüp == Alert.AlertType.WARNING ? "Hoiatus" : "Teade");
         alert.setHeaderText(null);
         alert.setContentText(teade);
+        
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            alert.showingProperty().addListener((_, _, isShowing) -> {
+                if (isShowing) {
+                    alertStage.getIcons().add(icon);
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Hoiatus: Ikooni laadimine ebaõnnestus teateakna jaoks: " + e.getMessage());
+        }
+        
         alert.showAndWait();
     }
 }
