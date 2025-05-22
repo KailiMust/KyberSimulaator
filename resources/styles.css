@@ -4,7 +4,7 @@
     -fx-font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* Nuppude stiilid */
+/* Nuppude stiilid - standardsed suurused */
 .button {
     -fx-background-color: #4a6da7;
     -fx-text-fill: white;
@@ -17,11 +17,56 @@
     -fx-background-color: #3a5d97;
 }
 
-/* Siltide stiilid */
-.label {
-    -fx-text-fill: #333333;
+/* Spetsiifilised nuppude tüübid */
+.menu-button {
+    -fx-pref-width: 300px;
+    -fx-max-width: Double.MAX_VALUE;
 }
 
+.standard-button {
+    -fx-pref-width: 200px;
+}
+
+.small-button {
+    -fx-pref-width: 100px;
+}
+
+.wide-button {
+    -fx-pref-width: 250px;
+}
+
+/* Paneelidele standardsed suurused */
+.glass-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+    -fx-padding: 15px;
+    -fx-spacing: 15px;
+    -fx-alignment: center;
+}
+
+.main-content-panel {
+    -fx-max-width: 400px;
+}
+
+.wide-content-panel {
+    -fx-max-width: 500px;
+}
+
+.category-card {
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+}
+
+/* Responsiivse käitumise baas */
+.responsive-container {
+    -fx-max-width: 80%;
+    -fx-min-width: 300px;
+}
+
+/* Siltide stiilid */
 .title-label {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
@@ -32,7 +77,51 @@
     -fx-font-weight: bold;
 }
 
-/* Tekstiväljade stiilid */
+.info-label-large {
+    -fx-font-size: 18px;
+}
+
+.info-label-medium {
+    -fx-font-size: 16px;
+}
+
+/* Tulemuste stiilid */
+.result-positive {
+    -fx-text-fill: #2e7d32;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.result-negative {
+    -fx-text-fill: #c62828;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Stsenaariumiekraani spetsiifilised stiilid */
+.scenario-description {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px;
+    -fx-max-width: Double.MAX_VALUE;
+}
+
+.scenario-question {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0;
+    -fx-max-width: Double.MAX_VALUE;
+}
+
+/* Lisainfo ja teksti alad */
+.text-area {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 2px;
+    -fx-pref-height: 200px;
+}
+
 .text-field {
     -fx-background-color: white;
     -fx-border-color: #cccccc;
@@ -40,57 +129,8 @@
     -fx-padding: 5px;
 }
 
-/* Raadionuppude stiilid */
+/* Radio buttonid */
 .radio-button {
     -fx-padding: 5px;
-}
-
-/* Tekstiala stiilid */
-.text-area {
-    -fx-background-color: white;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 2px;
-}
-
-/* Loendite stiilid */
-.list-view {
-    -fx-background-color: white;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 2px;
-}
-
-/* Stsenaariumiekraani stiilid */
-.scenario-description {
-    -fx-background-color: #f8f8f8;
-    -fx-border-color: #e0e0e0;
-    -fx-border-radius: 4px;
-    -fx-padding: 10px;
-}
-
-.scenario-question {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 0;
-}
-
-.scenario-options {
-    -fx-spacing: 10px;
-    -fx-padding: 10px 0;
-}
-
-/* Tulemuste stiilid */
-.result-positive {
-    -fx-text-fill: #2e7d32;
-}
-
-.result-negative {
-    -fx-text-fill: #c62828;
-}
-
-/* Paneel aknaklaasiga */
-.glass-pane {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
-    -fx-background-radius: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
-    -fx-padding: 15px;
+    -fx-max-width: Double.MAX_VALUE;
 }
