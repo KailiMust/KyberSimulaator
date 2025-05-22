@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * LogiHaldur klass haldab mängija tegevuste logimist.
+ * LogiHaldur klass haldab kasutaja tegevuste logimist.
  * Salvestab mängusessiooni info, kasutaja valikud ja skoorid.
  *
  * @author Kevin Laig, Kaili Must
  */
 public class LogiHaldur {
-    /** Mängija nimi */
-    private final String mängijaNimi;
+    /** Kasutaja nimi */
+    private final String kasutajaNimi;
     
     /** Sessiooni algusaeg */
     private final LocalDateTime sessioonAlgus;
@@ -28,14 +28,14 @@ public class LogiHaldur {
     /**
      * Konstruktor uue logihalduri loomiseks.
      *
-     * @param mängijaNimi mängija nimi
+     * @param kasutajaNimi kasutaja nimi
      */
-    public LogiHaldur(String mängijaNimi) {
-        this.mängijaNimi = mängijaNimi;
+    public LogiHaldur(String kasutajaNimi) {
+        this.kasutajaNimi = kasutajaNimi;
         this.sessioonAlgus = LocalDateTime.now();
         
         // Loome vajalikud kaustad
-        File kasutajaKaust = new File(ANDMETE_KAUST + mängijaNimi);
+        File kasutajaKaust = new File(ANDMETE_KAUST + kasutajaNimi);
         if (!kasutajaKaust.exists()) {
             kasutajaKaust.mkdirs();
         }
@@ -50,7 +50,7 @@ public class LogiHaldur {
      * @param sündmus logitav sündmus
      */
     public void logiSündmus(String sündmus) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ANDMETE_KAUST + mängijaNimi + "/log.txt", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ANDMETE_KAUST + kasutajaNimi + "/log.txt", true))) {
             writer.write("[" + LocalDateTime.now().format(KUUPÄEVA_FORMAAT) + "] " + sündmus);
             writer.newLine();
         } catch (IOException e) {

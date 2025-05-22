@@ -14,26 +14,26 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * MängijaLoomisDialoog klass kuvab dialoogi uue mängija loomiseks.
+ * KasutajaLoomisDialoog klass kuvab dialoogi uue kasutaja loomiseks.
  * 
  * @author Kevin Laig, Kaili Must
  */
-public class MängijaLoomisDialoog {
+public class KasutajaLoomisDialoog {
     
-    private String mängijaNimi = null;
+    private String kasutajaNimi = null;
     
     /**
-     * Näitab mängija loomise dialoogi.
+     * Näitab kasutaja loomise dialoogi.
      * 
      * @param omanikLava omaniku lava
-     * @return loodud mängija nimi või null, kui loomine tühistati
+     * @return loodud kasutaja nimi või null, kui loomine tühistati
      */
     public String näitaDialoog(Stage omanikLava) {
         // Loome uue lava
         Stage dialoogLava = new Stage();
         dialoogLava.initModality(Modality.WINDOW_MODAL);
         dialoogLava.initOwner(omanikLava);
-        dialoogLava.setTitle("Loo uus mängija");
+        dialoogLava.setTitle("Loo uus kasutaja");
         dialoogLava.setMinWidth(350);
         dialoogLava.setMinHeight(280);
         
@@ -42,7 +42,7 @@ public class MängijaLoomisDialoog {
         juurPaneel.setPadding(new Insets(20));
         juurPaneel.setAlignment(Pos.CENTER);
         
-        Label juhisLabel = new Label("Sisesta mängija nimi:");
+        Label juhisLabel = new Label("Sisesta kasutaja nimi:");
         juhisLabel.getStyleClass().add("subtitle-label");
         
         // Lisame täpsema juhise
@@ -50,13 +50,13 @@ public class MängijaLoomisDialoog {
         validatsiooniJuhis.setStyle("-fx-font-size: 12px; -fx-text-fill: #666666;");
         
         TextField nimiVäli = new TextField();
-        nimiVäli.setPromptText("Mängija nimi");
+        nimiVäli.setPromptText("Kasutaja nimi");
         nimiVäli.setPrefWidth(250);
         
         HBox nupudRida = new HBox(15);
         nupudRida.setAlignment(Pos.CENTER);
         
-        Button looBtn = new Button("Loo mängija");
+        Button looBtn = new Button("Loo kasutaja");
         looBtn.setPrefWidth(120);
         
         Button tühistaBtn = new Button("Tühista");
@@ -78,13 +78,13 @@ public class MängijaLoomisDialoog {
                 veaLabel.setText(viga);
                 veaLabel.setVisible(true);
             } else {
-                this.mängijaNimi = nimi;
+                this.kasutajaNimi = nimi;
                 dialoogLava.close();
             }
         });
         
         tühistaBtn.setOnAction(_ -> {
-            this.mängijaNimi = null;
+            this.kasutajaNimi = null;
             dialoogLava.close();
         });
         
@@ -111,11 +111,11 @@ public class MängijaLoomisDialoog {
         // Näitame dialoogi ja ootame selle sulgemist
         dialoogLava.showAndWait();
         
-        return mängijaNimi;
+        return kasutajaNimi;
     }
     
     /**
-     * Valideerib mängija nime rangelt.
+     * Valideerib kasutaja nime rangelt.
      * Lubatud on ainult tähed (a-z, A-Z, ä, ö, ü, õ) ja numbrid (0-9).
      * 
      * @param nimi valideeritav nimi

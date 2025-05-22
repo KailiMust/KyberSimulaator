@@ -13,8 +13,8 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import model.KasutajaProfiil;
 import model.Stsenaarium;
-import view.MängijaKustutamiseDialoog;
-import view.MängijaLoomisDialoog;
+import view.KasutajaKustutamiseDialoog;
+import view.KasutajaLoomisDialoog;
 import view.StatistikaEkraan;
 import view.StsenaariumiEkraan;
 
@@ -58,7 +58,7 @@ public class KüberSimulaatorFX extends Application {
         
         seadistaPeamineLava();
         looAndmeteKaust();
-        näitaMängijaValikEkraan();
+        näitaKasutajaValikEkraan();
     }
     
     /**
@@ -99,28 +99,28 @@ public class KüberSimulaatorFX extends Application {
     }
     
     /**
-     * Näitab mängija valiku ekraani.
+     * Näitab kasutaja valiku ekraani.
      */
-    private void näitaMängijaValikEkraan() {
-        Scene stseen = looMängijaValikEkraan();
+    private void näitaKasutajaValikEkraan() {
+        Scene stseen = looKasutajaValikEkraan();
         lisaCSS(stseen);
         peaLava.setScene(stseen);
     }
     
     /**
-     * Loob mängija valiku ekraani.
+     * Loob kasutaja valiku ekraani.
      */
-    private Scene looMängijaValikEkraan() {
+    private Scene looKasutajaValikEkraan() {
         BorderPane juurPaneel = new BorderPane();
         juurPaneel.setPadding(new Insets(20));
         
         // Pealkiri
-        Label pealkiri = new Label("Vali mängija");
+        Label pealkiri = new Label("Vali kasutaja");
         pealkiri.getStyleClass().add("title-label");
         juurPaneel.setTop(looKeskendatudPaneel(pealkiri));
         
         // Sisu
-        VBox sisu = looMängijaValikSisu();
+        VBox sisu = looKasutajaValikSisu();
         ScrollPane kerimisAla = new ScrollPane(sisu);
         kerimisAla.setFitToWidth(true);
         juurPaneel.setCenter(kerimisAla);
@@ -143,59 +143,59 @@ public class KüberSimulaatorFX extends Application {
     }
     
     /**
-     * Loob mängija valiku sisu.
+     * Loob kasutaja valiku sisu.
      */
-    private VBox looMängijaValikSisu() {
+    private VBox looKasutajaValikSisu() {
         VBox sisu = new VBox(15);
         sisu.setAlignment(Pos.CENTER);
         
-        List<String> olemasolevadMängijad = KasutajaProfiil.saaOlemasolevadMängijadSorteeritult();
+        List<String> olemasolevadKasutajad = KasutajaProfiil.saaOlemasolevadKasutajadSorteeritult();
         
-        if (!olemasolevadMängijad.isEmpty()) {
+        if (!olemasolevadKasutajad.isEmpty()) {
             sisu.getChildren().addAll(
-                looSubtiitel("Olemasolevad mängijad:"),
-                looMängijateLoend(olemasolevadMängijad, sisu)
+                looSubtiitel("Olemasolevad kasutajad:"),
+                looKasutajateLoend(olemasolevadKasutajad, sisu)
             );
 
-            // Mängija kustutamise nupp
-            Button kustutaBtn = looKohandatudNupp("Kustuta mängija", 200, sisu, _ -> kustutaMängija());
+            // Kasutaja kustutamise nupp
+            Button kustutaBtn = looKohandatudNupp("Kustuta kasutaja", 200, sisu, _ -> kustutaKasutaja());
             sisu.getChildren().add(kustutaBtn);
         } else {
-            Label teade = new Label("Hetkel pole ühtegi mängijat. Loo uus mängija, et alustada.");
+            Label teade = new Label("Hetkel pole ühtegi kasutajat. Loo uus kasutaja, et alustada.");
             teade.setWrapText(true);
             teade.getStyleClass().add("subtitle-label");
             sisu.getChildren().add(teade);
         }
         
-        // Uue mängija loomise nupp
-        Button uusMängijaBtn = looKohandatudNupp("Loo uus mängija", 200, sisu, _ -> looUusMängija());
-        sisu.getChildren().add(uusMängijaBtn);
+        // Uue kasutaja loomise nupp
+        Button uusKasutajaBtn = looKohandatudNupp("Loo uus kasutaja", 200, sisu, _ -> looUusKasutaja());
+        sisu.getChildren().add(uusKasutajaBtn);
         
         return sisu;
     }
     
     /**
-     * Loob mängijate loendi koos valimise nupuga.
+     * Loob kasutajate loendi koos valimise nupuga.
      */
-    private VBox looMängijateLoend(List<String> mängijad, VBox konteiner) {
+    private VBox looKasutajateLoend(List<String> kasutajad, VBox konteiner) {
         VBox loendPaneel = new VBox(10);
         
         ListView<String> loend = new ListView<>();
-        loend.getItems().addAll(mängijad);
+        loend.getItems().addAll(kasutajad);
         loend.setPrefHeight(200);
         loend.prefWidthProperty().bind(Bindings.max(300, konteiner.widthProperty().multiply(0.8)));
         
-        // Valime automaatselt esimese mängija
-        if (!mängijad.isEmpty()) {
+        // Valime automaatselt esimese kasutaja
+        if (!kasutajad.isEmpty()) {
             loend.getSelectionModel().selectFirst();
         }
         
-        Button valiBtn = looKohandatudNupp("Vali mängija", 200, konteiner, _ -> {
+        Button valiBtn = looKohandatudNupp("Vali kasutaja", 200, konteiner, _ -> {
             String valitud = loend.getSelectionModel().getSelectedItem();
             if (valitud != null) {
-                valiMängija(valitud);
+                valiKasutaja(valitud);
             } else {
-                näitaViga("Palun vali mängija loendist");
+                näitaViga("Palun vali kasutaja loendist");
             }
         });
         
@@ -204,7 +204,7 @@ public class KüberSimulaatorFX extends Application {
             if (event.getCode() == KeyCode.ENTER) {
                 String valitud = loend.getSelectionModel().getSelectedItem();
                 if (valitud != null) {
-                    valiMängija(valitud);
+                    valiKasutaja(valitud);
                 }
             }
         });
@@ -214,7 +214,7 @@ public class KüberSimulaatorFX extends Application {
             if (event.getClickCount() == 2) {
                 String valitud = loend.getSelectionModel().getSelectedItem();
                 if (valitud != null) {
-                    valiMängija(valitud);
+                    valiKasutaja(valitud);
                 }
             }
         });
@@ -224,18 +224,18 @@ public class KüberSimulaatorFX extends Application {
     }
     
     /**
-     * Valib mängija ja laeb tema profiili.
+     * Valib kasutaja ja laeb tema profiili.
      */
-    private void valiMängija(String mängijaNimi) {
-        this.praeguneKasutaja = mängijaNimi;
+    private void valiKasutaja(String kasutajaNimi) {
+        this.praeguneKasutaja = kasutajaNimi;
         
-        if (!mängijaNimi.equals("Külaline")) {
-            this.profiil = KasutajaProfiil.laeProfiil(mängijaNimi);
+        if (!kasutajaNimi.equals("Külaline")) {
+            this.profiil = KasutajaProfiil.laeProfiil(kasutajaNimi);
             if (this.profiil == null) {
-                this.profiil = new KasutajaProfiil(mängijaNimi);
+                this.profiil = new KasutajaProfiil(kasutajaNimi);
                 this.profiil.salvestaProfiil();
             }
-            this.logiHaldur = new LogiHaldur(mängijaNimi);
+            this.logiHaldur = new LogiHaldur(kasutajaNimi);
             logiHaldur.logiSündmus("Sisenes mängu");
         }
         
@@ -243,18 +243,18 @@ public class KüberSimulaatorFX extends Application {
     }
     
     /**
-     * Avab dialoogi uue mängija loomiseks.
+     * Avab dialoogi uue kasutaja loomiseks.
      */
-    private void looUusMängija() {
-        MängijaLoomisDialoog dialoog = new MängijaLoomisDialoog();
-        String uusMängijaNimi = dialoog.näitaDialoog(peaLava);
+    private void looUusKasutaja() {
+        KasutajaLoomisDialoog dialoog = new KasutajaLoomisDialoog();
+        String uusKasutajaNimi = dialoog.näitaDialoog(peaLava);
         
-        if (uusMängijaNimi != null && !uusMängijaNimi.isEmpty()) {
-            this.profiil = new KasutajaProfiil(uusMängijaNimi);
+        if (uusKasutajaNimi != null && !uusKasutajaNimi.isEmpty()) {
+            this.profiil = new KasutajaProfiil(uusKasutajaNimi);
             this.profiil.salvestaProfiil();
-            this.logiHaldur = new LogiHaldur(uusMängijaNimi);
-            logiHaldur.logiSündmus("Loodud uus mängija");
-            this.praeguneKasutaja = uusMängijaNimi;
+            this.logiHaldur = new LogiHaldur(uusKasutajaNimi);
+            logiHaldur.logiSündmus("Loodud uus kasutaja");
+            this.praeguneKasutaja = uusKasutajaNimi;
             näitaPeamenüü();
         }
     }
@@ -262,12 +262,12 @@ public class KüberSimulaatorFX extends Application {
     /**
      * Avab kasutaja kustutamise dialoogi.
      */
-    private void kustutaMängija() {
-        MängijaKustutamiseDialoog dialoog = new MängijaKustutamiseDialoog();
+    private void kustutaKasutaja() {
+        KasutajaKustutamiseDialoog dialoog = new KasutajaKustutamiseDialoog();
         boolean kasutajaKustutati = dialoog.näitaDialoog(peaLava);
         
         if (kasutajaKustutati) {
-            näitaMängijaValikEkraan();
+            näitaKasutajaValikEkraan();
         }
     }
 
@@ -301,7 +301,7 @@ public class KüberSimulaatorFX extends Application {
         stseen.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 logi("Väljus peamenüüsse");
-                näitaMängijaValikEkraan();
+                näitaKasutajaValikEkraan();
             }
         });
         
@@ -319,10 +319,10 @@ public class KüberSimulaatorFX extends Application {
         Label pealkiri = new Label("Küberturvalisuse Simulaator");
         pealkiri.getStyleClass().add("title-label");
         
-        Label mängijaInfo = new Label("Mängija: " + praeguneKasutaja);
-        mängijaInfo.getStyleClass().add("subtitle-label");
+        Label kasutajaInfo = new Label("Kasutaja: " + praeguneKasutaja);
+        kasutajaInfo.getStyleClass().add("subtitle-label");
         
-        päis.getChildren().addAll(pealkiri, mängijaInfo);
+        päis.getChildren().addAll(pealkiri, kasutajaInfo);
         return päis;
     }
     
@@ -349,9 +349,9 @@ public class KüberSimulaatorFX extends Application {
             looMenüüNupp("Vali kategooria", menüü, _ -> näitaKategooriadEkraan()),
             looMenüüNupp("Vaata statistikat", menüü, _ -> näitaStatistika()),
             looMenüüNupp("Juhised", menüü, _ -> näitaJuhisedEkraan()),
-            looMenüüNupp("Tagasi mängija valikusse", menüü, _ -> {
+            looMenüüNupp("Tagasi kasutaja valikusse", menüü, _ -> {
                 logi("Väljus peamenüüsse");
-                näitaMängijaValikEkraan();
+                näitaKasutajaValikEkraan();
             }),
             looMenüüNupp("Välju", menüü, _ -> {
                 logiSessioonLõpp();
@@ -507,7 +507,7 @@ public class KüberSimulaatorFX extends Application {
                 "• Soovi korral saad igal hetkel stsenaariumist väljuda, kuid sellisel juhul loetakse see ebaõnnestunud läbimiseks"
             }),
             looJuhisedSektsioon("MÄNGIJA PROFIIL", new String[]{
-                "• Loo endale mängija profiil, et jälgida oma edusamme",
+                "• Loo endale kasutaja profiil, et jälgida oma edusamme",
                 "• Sinu tulemused salvestatakse automaatselt",
                 "• Statistika ekraanil näed oma koguskoori ja läbitud stsenaariumeid",
                 "• Kui soovid alustada uuesti, võid luua uue profiili"

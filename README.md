@@ -71,7 +71,7 @@ Kui saad vea "NoClassDefFoundError: Scene", siis JavaFX moodulid pole korrektsel
 ## Projekti struktuur
 - `src/` - Lähtekoodi failid
 - `resources/` - Ressursifailid (CSS, pildid jne)
-- `data/` - Andmefailid (mängijate profiilid jne)
+- `data/` - Andmefailid (kasutajate profiilid jne)
 - `target/` - Kompileeritud failid (genereeritakse ehitamise käigus)
 
 ## Märkused

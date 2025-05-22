@@ -26,7 +26,7 @@ import java.util.Optional;
  * 
  * @author Kevin Laig, Kaili Must
  */
-public class MängijaKustutamiseDialoog {
+public class KasutajaKustutamiseDialoog {
     
     private boolean kasutajaKustutati = false;
     
@@ -38,7 +38,7 @@ public class MängijaKustutamiseDialoog {
      */
     public boolean näitaDialoog(Stage omanikLava) {
         // Laeme olemasolevad kasutajad
-        List<String> kasutajad = KasutajaProfiil.saaOlemasolevadMängijadSorteeritult();
+        List<String> kasutajad = KasutajaProfiil.saaOlemasolevadKasutajadSorteeritult();
         
         if (kasutajad.isEmpty()) {
             näitaTeade("Ühtegi kasutajat pole kustutamiseks saadaval.", Alert.AlertType.INFORMATION);
@@ -63,7 +63,7 @@ public class MängijaKustutamiseDialoog {
         hoiatusLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
         hoiatusLabel.setTextFill(Color.RED);
         
-        Label selgitusLabel = new Label("Mängija kustutamine eemaldab KÕIK mängijaga seotud andmed:\n" +
+        Label selgitusLabel = new Label("Kasutaja kustutamine eemaldab KÕIK kasutajaga seotud andmed:\n" +
                 "• Kõik läbitud stsenaariumid ja skoorid\n" +
                 "• Kogu statistika ja ajalugu\n" +
                 "• Kõik logifailid\n\n" +
@@ -71,7 +71,7 @@ public class MängijaKustutamiseDialoog {
         selgitusLabel.setWrapText(true);
         selgitusLabel.setStyle("-fx-font-size: 14px;");
         
-        Label juhisLabel = new Label("Vali kustutatav mängija:");
+        Label juhisLabel = new Label("Vali kustutatav kasutaja:");
         juhisLabel.getStyleClass().add("subtitle-label");
         
         // Kasutajate loend
@@ -84,7 +84,7 @@ public class MängijaKustutamiseDialoog {
         HBox nupudRida = new HBox(15);
         nupudRida.setAlignment(Pos.CENTER);
         
-        Button kustutaBtn = new Button("Kustuta mängija");
+        Button kustutaBtn = new Button("Kustuta kasutaja");
         kustutaBtn.setPrefWidth(140);
         kustutaBtn.setStyle("-fx-background-color: #d32f2f; -fx-text-fill: white;");
         
@@ -100,14 +100,14 @@ public class MängijaKustutamiseDialoog {
                 if (kinnitaKustutamine(valitudKasutaja)) {
                     if (KasutajaProfiil.kustutaProfiil(valitudKasutaja)) {
                         kasutajaKustutati = true;
-                        näitaTeade("Mängija '" + valitudKasutaja + "' kustutati edukalt!", Alert.AlertType.INFORMATION);
+                        näitaTeade("Kasutaja '" + valitudKasutaja + "' kustutati edukalt!", Alert.AlertType.INFORMATION);
                         dialoogLava.close();
                     } else {
-                        näitaTeade("Viga mängija kustutamisel. Palun proovi uuesti.", Alert.AlertType.ERROR);
+                        näitaTeade("Viga kasutaja kustutamisel. Palun proovi uuesti.", Alert.AlertType.ERROR);
                     }
                 }
             } else {
-                näitaTeade("Palun vali kustutamiseks mängija!", Alert.AlertType.WARNING);
+                näitaTeade("Palun vali kustutamiseks kasutaja!", Alert.AlertType.WARNING);
             }
         });
         
@@ -147,11 +147,11 @@ public class MängijaKustutamiseDialoog {
     /**
     * Küsib kasutajalt kinnitust kustutamiseks.
     */
-    private boolean kinnitaKustutamine(String mängijaNimi) {
+    private boolean kinnitaKustutamine(String kasutajaNimi) {
         Alert kinnitusDialoog = new Alert(Alert.AlertType.CONFIRMATION);
         kinnitusDialoog.setTitle("Kinnita kustutamine");
         kinnitusDialoog.setHeaderText("Kas oled kindel?");
-        kinnitusDialoog.setContentText("Kas soovid tõesti kustutada mängija '" + mängijaNimi + "'?\n\n" +
+        kinnitusDialoog.setContentText("Kas soovid tõesti kustutada kasutaja '" + kasutajaNimi + "'?\n\n" +
                 "Kõik tema andmed kustutatakse jäädavalt ja seda ei saa tagasi võtta!");
         
         ButtonType jahNupp = new ButtonType("Jah, kustuta");

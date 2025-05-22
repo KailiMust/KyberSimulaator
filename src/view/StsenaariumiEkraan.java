@@ -39,8 +39,8 @@ public class StsenaariumiEkraan {
     /** Stsenaarium, mida kuvatakse */
     private final Stsenaarium stsenaarium;
     
-    /** Mängija nimi - kasutatakse logi halduri ja kasutajaprofiili loomiseks */
-    private final String mängijaNimi;
+    /** Kasutaja nimi - kasutatakse logi halduri ja kasutajaprofiili loomiseks */
+    private final String kasutajaNimi;
     
     /** Praegune küsimus */
     private Küsimus praeguneKüsimus;
@@ -65,22 +65,22 @@ public class StsenaariumiEkraan {
      *
      * @param peaLava rakenduse peamine lava
      * @param stsenaarium esitatav stsenaarium
-     * @param mängijaNimi mängija nimi
+     * @param kasutajaNimi kasutaja nimi
      * @param tagasiPeamenüüsse tagasikutse peamenüüsse naasmiseks
      */
-    public StsenaariumiEkraan(Stage peaLava, Stsenaarium stsenaarium, String mängijaNimi, Runnable tagasiPeamenüüsse) {
+    public StsenaariumiEkraan(Stage peaLava, Stsenaarium stsenaarium, String kasutajaNimi, Runnable tagasiPeamenüüsse) {
         this.peaLava = peaLava;
         this.stsenaarium = stsenaarium;
-        this.mängijaNimi = mängijaNimi;
+        this.kasutajaNimi = kasutajaNimi;
         this.tagasiPeamenüüsse = tagasiPeamenüüsse;
         
         // Loome logi halduri
-        this.logiHaldur = new LogiHaldur(mängijaNimi);
+        this.logiHaldur = new LogiHaldur(kasutajaNimi);
         
         // Laeme või loome kasutajaprofiili
-        this.profiil = KasutajaProfiil.laeProfiil(mängijaNimi);
+        this.profiil = KasutajaProfiil.laeProfiil(kasutajaNimi);
         if (this.profiil == null) {
-            this.profiil = new KasutajaProfiil(mängijaNimi);
+            this.profiil = new KasutajaProfiil(kasutajaNimi);
         }
         
         // Logime stsenaariumi alustamise
@@ -297,7 +297,7 @@ public class StsenaariumiEkraan {
         lisainfoLava.showAndWait();
         
         // Logime lisainfo vaatamise
-        logiHaldur.logiSündmus("Mängija " + mängijaNimi + " vaatas lisainfot küsimuse kohta");
+        logiHaldur.logiSündmus("Kasutaja " + kasutajaNimi + " vaatas lisainfot küsimuse kohta");
     }
     
     /**

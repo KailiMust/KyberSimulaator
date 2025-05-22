@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 import model.KasutajaProfiil;
 
 /**
- * StatistikaEkraan klass haldab mängija statistika kuvamist JavaFX kasutajaliideses.
- * Näitab mängija koguskoori, läbitud stsenaariumite arvu jms.
+ * StatistikaEkraan klass haldab kasutaja statistika kuvamist JavaFX kasutajaliideses.
+ * Näitab kasutaja koguskoori, läbitud stsenaariumite arvu jms.
  *
  * @author Kevin Laig, Kaili Must
  */
 public class StatistikaEkraan {
     private final Stage peaLava;
-    private final String mängijaNimi;
+    private final String kasutajaNimi;
     private final KasutajaProfiil profiil;
     private final Runnable tagasiPeamenüüsse;
     
@@ -25,17 +25,17 @@ public class StatistikaEkraan {
      * Konstruktor statistika ekraani loomiseks.
      *
      * @param peaLava rakenduse peamine lava
-     * @param mängijaNimi mängija nimi
+     * @param kasutajaNimi kasutaja nimi
      * @param tagasiPeamenüüsse tagasikutse peamenüüsse naasmiseks
      */
-    public StatistikaEkraan(Stage peaLava, String mängijaNimi, Runnable tagasiPeamenüüsse) {
+    public StatistikaEkraan(Stage peaLava, String kasutajaNimi, Runnable tagasiPeamenüüsse) {
         this.peaLava = peaLava;
-        this.mängijaNimi = mängijaNimi;
+        this.kasutajaNimi = kasutajaNimi;
         this.tagasiPeamenüüsse = tagasiPeamenüüsse;
         
         // Laeme kasutajaprofiili
-        KasutajaProfiil laetudProfiil = KasutajaProfiil.laeProfiil(mängijaNimi);
-        this.profiil = (laetudProfiil != null) ? laetudProfiil : new KasutajaProfiil(mängijaNimi);
+        KasutajaProfiil laetudProfiil = KasutajaProfiil.laeProfiil(kasutajaNimi);
+        this.profiil = (laetudProfiil != null) ? laetudProfiil : new KasutajaProfiil(kasutajaNimi);
     }
     
     /**
@@ -55,7 +55,7 @@ public class StatistikaEkraan {
         juurPaneel.setPadding(new Insets(20));
         
         // Pealkiri
-        Label pealkiri = new Label("Mängija statistika");
+        Label pealkiri = new Label("Kasutaja statistika");
         pealkiri.getStyleClass().add("title-label");
         BorderPane.setAlignment(pealkiri, Pos.CENTER);
         juurPaneel.setTop(pealkiri);
@@ -67,7 +67,7 @@ public class StatistikaEkraan {
         
         // Statistika info
         statistikaPaneel.getChildren().addAll(
-            looInfoLabel("Mängija: " + mängijaNimi, "18px"),
+            looInfoLabel("Kasutaja: " + kasutajaNimi, "18px"),
             looInfoLabel("Koguskoor: " + profiil.getKoguSkoor() + " punkti", "18px"),
             looInfoLabel("Läbitud stsenaariumid: " + profiil.getLäbitudStsenaariumiteArv(), "16px"),
             looInfoLabel("Ebaõnnestunud stsenaariumid: " + profiil.getEbaõnnestunudStsenaariumiteArv(), "16px")

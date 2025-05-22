@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * KasutajaProfiil klass haldab mängija profiili andmeid.
- * Võimaldab salvestada ja laadida mängija andmeid failist.
+ * KasutajaProfiil klass haldab kasutaja profiili andmeid.
+ * Võimaldab salvestada ja laadida kasutaja andmeid failist.
  *
  * @author Kevin Laig, Kaili Must
  */
 public class KasutajaProfiil {
-    /** Mängija nimi */
+    /** Kasutaja nimi */
     private String nimi;
     
-    /** Mängija koguskoor */
+    /** Kasutaja koguskoor */
     private int koguSkoor;
     
     /** Läbitud stsenaariumid ja nende skoorid */
@@ -35,7 +35,7 @@ public class KasutajaProfiil {
     /**
      * Konstruktor uue kasutajaprofiili loomiseks.
      *
-     * @param nimi mängija nimi
+     * @param nimi kasutaja nimi
      */
     public KasutajaProfiil(String nimi) {
         this.nimi = nimi;
@@ -45,18 +45,18 @@ public class KasutajaProfiil {
     }
     
     /**
-     * Tagastab mängija nime.
+     * Tagastab kasutaja nime.
      *
-     * @return mängija nimi
+     * @return kasutaja nimi
      */
     public String getNimi() {
         return nimi;
     }
     
     /**
-     * Tagastab mängija koguskoori.
+     * Tagastab kasutaja koguskoori.
      *
-     * @return mängija koguskoor
+     * @return kasutaja koguskoor
      */
     public int getKoguSkoor() {
         return koguSkoor;
@@ -147,7 +147,7 @@ public class KasutajaProfiil {
     /**
      * Laeb profiili failisüsteemist.
      *
-     * @param nimi mängija nimi
+     * @param nimi kasutaja nimi
      * @return laetud profiil või null, kui profiili ei leitud
      */
     public static KasutajaProfiil laeProfiil(String nimi) {
@@ -190,32 +190,32 @@ public class KasutajaProfiil {
     }
 
     /**
-     * Tagastab kõigi olemasolevate mängijate nimed tähestikujärjekorras.
+     * Tagastab kõigi olemasolevate kasutajate nimed tähestikujärjekorras.
      *
-     * @return sorteeritud mängijate nimede loend
+     * @return sorteeritud kasutajate nimede loend
      */
-    public static List<String> saaOlemasolevadMängijadSorteeritult() {
-        List<String> mängijad = new ArrayList<>();
+    public static List<String> saaOlemasolevadKasutajadSorteeritult() {
+        List<String> kasutajad = new ArrayList<>();
         
         File kasutajadKaust = new File(ANDMETE_KAUST);
         if (!kasutajadKaust.exists()) {
             kasutajadKaust.mkdirs();
-            return mängijad;
+            return kasutajad;
         }
         
         File[] kasutajaKaustad = kasutajadKaust.listFiles(File::isDirectory);
         if (kasutajaKaustad != null) {
             for (File kaust : kasutajaKaustad) {
                 if (new File(kaust, "profile.txt").exists()) {
-                    mängijad.add(kaust.getName());
+                    kasutajad.add(kaust.getName());
                 }
             }
         }
         
         // Sorteerime tähestikujärjekorda
-        mängijad.sort(String.CASE_INSENSITIVE_ORDER);
+        kasutajad.sort(String.CASE_INSENSITIVE_ORDER);
         
-        return mängijad;
+        return kasutajad;
     }
 
     /**
