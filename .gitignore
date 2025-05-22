@@ -6,8 +6,6 @@
 !src/**
 !resources/
 !resources/**
-!data/
-!data/**
 
 # Don't ignore these files
 !pom.xml

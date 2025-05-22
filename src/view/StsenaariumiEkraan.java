@@ -89,71 +89,10 @@ public class StsenaariumiEkraan {
     }
     
     /**
-     * Näitab stsenaariumi ekraani ja alustab stsenaariumi esitamist.
+     * Näitab stsenaariumi ekraani ja alustab kohe esimest küsimust.
      */
     public void näita() {
-        BorderPane juurPaneel = new BorderPane();
-        juurPaneel.setPadding(new Insets(20));
-        
-        // Pealkirja paneel
-        Label pealkiri = new Label(stsenaarium.getPealkiri());
-        pealkiri.getStyleClass().add("title-label");
-        BorderPane.setAlignment(pealkiri, Pos.CENTER);
-        juurPaneel.setTop(pealkiri);
-        
-        // Stsenaariumi kirjelduse paneel
-        VBox kirjeldusPaneel = new VBox(15);
-        kirjeldusPaneel.setPadding(new Insets(20, 0, 20, 0));
-        
-        TextArea kirjeldus = new TextArea(stsenaarium.getKirjeldus());
-        kirjeldus.setWrapText(true);
-        kirjeldus.setEditable(false);
-        kirjeldus.setPrefHeight(100);
-        kirjeldus.getStyleClass().add("scenario-description");
-        
-        // Lisa responsiivne suurus
-        kirjeldus.minHeightProperty().bind(
-            Bindings.max(100, kirjeldusPaneel.heightProperty().multiply(0.3))
-        );
-        
-        kirjeldusPaneel.getChildren().add(kirjeldus);
-        
-        // Lisame ScrollPane, et tagada nähtavus
-        ScrollPane kerimisAla = new ScrollPane(kirjeldusPaneel);
-        kerimisAla.setFitToWidth(true);
-        kerimisAla.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-        juurPaneel.setCenter(kerimisAla);
-        
-        // Nuppude paneel
-        HBox nupudPaneel = new HBox(15);
-        nupudPaneel.setAlignment(Pos.CENTER);
-        nupudPaneel.setPadding(new Insets(15, 0, 0, 0));
-        
-        Button jätkaBtn = new Button("Alusta");
-        jätkaBtn.setPrefWidth(150);
-        jätkaBtn.setOnAction(_ -> näitaJärgmineKüsimus());
-        
-        Button väljuBtn = new Button("Välju stsenaariumist");
-        väljuBtn.setPrefWidth(150);
-        väljuBtn.setOnAction(_ -> katkestaStsenaarium());
-        
-        nupudPaneel.getChildren().addAll(jätkaBtn, väljuBtn);
-        juurPaneel.setBottom(nupudPaneel);
-        
-        // Loome stseeni ja lisame CSS
-        Scene stseen = new Scene(juurPaneel);
-        stseen.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        
-        // Lisa klaviatuuri tugi
-        stseen.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                katkestaStsenaarium();
-            } else if (event.getCode() == KeyCode.ENTER) {
-                näitaJärgmineKüsimus();
-            }
-        });
-        
-        peaLava.setScene(stseen);
+        näitaJärgmineKüsimus();
     }
     
     /**
