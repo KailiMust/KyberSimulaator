@@ -129,11 +129,13 @@ public class StsenaariumiEkraan {
         Label kirjeldusLabel = new Label("Stsenaariumi kirjeldus:");
         kirjeldusLabel.getStyleClass().add("subtitle-label");
         
-        TextArea kirjeldus = new TextArea(stsenaarium.getKirjeldus());
+        Label kirjeldus = new Label(stsenaarium.getKirjeldus());
         kirjeldus.setWrapText(true);
-        kirjeldus.setEditable(false);
-        kirjeldus.setPrefHeight(80);
         kirjeldus.getStyleClass().add("scenario-description");
+        // Määrame maksimaalse laiuse, et tekst mähkuks korralikult
+        kirjeldus.setMaxWidth(Double.MAX_VALUE);
+        // Lubame Label-il kasvada vastavalt sisule
+        kirjeldus.setPrefHeight(javafx.scene.layout.Region.USE_COMPUTED_SIZE);
         
         kirjeldusPaneel.getChildren().addAll(kirjeldusLabel, kirjeldus);
         keskmineKontainer.getChildren().add(kirjeldusPaneel);
@@ -148,6 +150,7 @@ public class StsenaariumiEkraan {
         Label küsimusTekst = new Label(praeguneKüsimus.getKüsimusTekst());
         küsimusTekst.setWrapText(true);
         küsimusTekst.getStyleClass().add("scenario-question");
+        küsimusTekst.setMaxWidth(Double.MAX_VALUE);
         
         küsimusePaneel.getChildren().addAll(küsimusLabel, küsimusTekst);
         keskmineKontainer.getChildren().add(küsimusePaneel);
@@ -170,16 +173,20 @@ public class StsenaariumiEkraan {
             valikuNupp.setToggleGroup(valikuGrupp);
             valikuNupp.setUserData(valik);
             valikuNupp.setWrapText(true);
+            valikuNupp.setMaxWidth(Double.MAX_VALUE);
             valikutePaneel.getChildren().add(valikuNupp);
             valikuNupud.add(valikuNupp);
         }
         
         keskmineKontainer.getChildren().add(valikutePaneel);
         
-        // Lisame ScrollPane, et tagada nähtavus
+        // Tavaliselt peaks kõik ära mahtuma ilma skrollimiseta
         ScrollPane kerimisAla = new ScrollPane(keskmineKontainer);
         kerimisAla.setFitToWidth(true);
         kerimisAla.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        kerimisAla.setHbarPolicy(ScrollBarPolicy.NEVER);
+        // Anname ScrollPane-ile piisavalt ruumi
+        kerimisAla.setMaxHeight(Double.MAX_VALUE);
         juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel
@@ -324,9 +331,11 @@ public class StsenaariumiEkraan {
         Label tagajärjeTekst = new Label(valik.getTagajärg());
         tagajärjeTekst.setWrapText(true);
         tagajärjeTekst.getStyleClass().add("scenario-question");
+        tagajärjeTekst.setMaxWidth(Double.MAX_VALUE);
         
         Label selgitusTekst = new Label(valik.getSelgitus());
         selgitusTekst.setWrapText(true);
+        selgitusTekst.setMaxWidth(Double.MAX_VALUE);
         
         // Lisa värviline skoor sõltuvalt selle väärtusest
         Label skoorTekst = new Label("Punktid: " + (valik.getTurvalisusSkoor() >= 0 ? "+" : "") + valik.getTurvalisusSkoor());
@@ -342,6 +351,8 @@ public class StsenaariumiEkraan {
         // Lisame ScrollPane
         ScrollPane kerimisAla = new ScrollPane(tagajärjePaneel);
         kerimisAla.setFitToWidth(true);
+        kerimisAla.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        kerimisAla.setHbarPolicy(ScrollBarPolicy.NEVER);
         juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel
@@ -422,6 +433,8 @@ public class StsenaariumiEkraan {
         // Lisame ScrollPane
         ScrollPane kerimisAla = new ScrollPane(tulemusedPaneel);
         kerimisAla.setFitToWidth(true);
+        kerimisAla.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        kerimisAla.setHbarPolicy(ScrollBarPolicy.NEVER);
         juurPaneel.setCenter(kerimisAla);
         
         // Nuppude paneel

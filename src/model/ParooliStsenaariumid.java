@@ -42,7 +42,7 @@ public class ParooliStsenaariumid {
         küsimus1.lisaValik(new Valik(
                 "123456",
                 "Liiga kerge parool. Sinu konto võetu üle ning sul puudub sellele ligipääs.",
-                "Taolised paroolid nagu 0000, 123456, parool, parool123 on enimkasutatavad ning väga lihtsasti äraarvatavad",
+                "Taolised paroolid nagu 0000, 123456, parool, parool123 on enimkasutatavad ning väga lihtsasti äraarvatavad.",
                 -10
         ));
 
@@ -56,7 +56,7 @@ public class ParooliStsenaariumid {
         küsimus1.lisaValik(new Valik(
                 "password",
                 "Liiga kerge parool. Sinu konto võetu üle ning sul puudub sellele ligipääs.",
-                "Taolised paroolid nagu parool, parool123, password on enimkasutatavad ning väga lihtsasti äraarvatavad",
+                "Taolised paroolid nagu parool, parool123, password on enimkasutatavad ning väga lihtsasti äraarvatavad.",
                 -5
         ));
 
@@ -65,23 +65,20 @@ public class ParooliStsenaariumid {
 
         // Loome teise küsimuse
         Küsimus küsimus2 = new Küsimus(
-                "Konto loomisel pakutakse võimalust valida turvaküsimus, mille korral saad parooli unustamise korral määrata uue parooli. \n" +
-                        "Millise turvaküsimuse valid?"
+                "Konto loomisel pakutakse võimalust valida turvaküsimus, mille korral saad parooli unustamise korral määrata uue parooli. Millise turvaküsimuse valid?"
         );
 
         // Lisame valikud
         küsimus2.lisaValik(new Valik(
                 "Mis on minu ema nimi?",
-                "Sinu tuttav proovis pääseda sinu kontole ligi. Ta teadis sinu ema nime ning sai läbi turvaküsimusest. \n" +
-                        "Sinu tuttav määras uue parooli ning pääses su kontole ligi. Ta luges läbi kõik sinu kirjavahetused.",
+                "Sinu tuttav proovis pääseda sinu kontole ligi. Ta teadis sinu ema nime ning sai läbi turvaküsimusest. Sinu tuttav määras uue parooli ning pääses su kontole ligi. Ta luges läbi kõik sinu kirjavahetused.",
                 "Turvaküsimuseks tuleks valida küsimus, mille vastust tead vaid sina.",
                 -10
         ));
 
         küsimus2.lisaValik(new Valik(
                 "Mis linnas ma sündisin?",
-                "Sinu tuttav proovis pääseda sinu kontole ligi. Ta teadis sinu sünnilinna ning sai läbi turvaküsimusest. \n" +
-                        "Sinu tuttav määras uue parooli ning pääses su kontole ligi. Ta luges läbi kõik sinu kirjavahetused.",
+                "Sinu tuttav proovis pääseda sinu kontole ligi. Ta teadis sinu sünnilinna ning sai läbi turvaküsimusest. Sinu tuttav määras uue parooli ning pääses su kontole ligi. Ta luges läbi kõik sinu kirjavahetused.",
                 "Turvaküsimuseks tuleks valida küsimus, mille vastust tead vaid sina.",
                 -5
         ));
@@ -89,9 +86,7 @@ public class ParooliStsenaariumid {
         küsimus2.lisaValik(new Valik(
                 "Mis on minu õnnenumber?",
                 "Suurepärane! Sinu turvaküsimus on unikaalne ning selle vastust tead tõenäoliselt vaid sina.",
-                "Turvaküsimuse määramine ei ole tegelikult kõige parem viis parooli lähtestamiseks. \n" +
-                        "Kõige lähedasemad inimesed võivad turvaküsimustest lihtsa vaevaga mööda pääseda. \n" +
-                        "Kui aga siiski soovid kasutada turvaküsimust, tuleb selleks valida unikaalne küsimus, mille vastust tead vaid sina.",
+                "Turvaküsimuse määramine ei ole tegelikult kõige parem viis parooli lähtestamiseks. Kõige lähedasemad inimesed võivad turvaküsimustest lihtsa vaevaga mööda pääseda. Kui aga siiski soovid kasutada turvaküsimust, tuleb selleks valida unikaalne küsimus, mille vastust tead vaid sina.",
                 10
         ));
 
@@ -107,25 +102,21 @@ public class ParooliStsenaariumid {
         küsimus3.lisaValik(new Valik(
                 "Saadan parooli taastamise lingi e-posti aadressile ja kasutan seda, et luua uus parool.",
                 "Sinu parooli taastamiseks saadeti e-postile link, mille abil saad valida uue parooli.",
-                "Kui oled unustanud mõne konto parooli, on alati kõige turvalisem saata enda e-posti aadressile link, \n"  +
-                        "mille abil on võimalik määrata enda kontole uus parool.",
+                "Kui oled unustanud mõne konto parooli, on alati kõige turvalisem saata enda e-posti aadressile link, mille abil on võimalik määrata enda kontole uus parool.",
                 10
         ));
 
         küsimus3.lisaValik(new Valik(
                 "Küsin parooli taastamisel abi tuttava käest. Tuttav aitab luua uue parooli.",
-                "Läksite tuttavaga tülli. Teie tuttav otsustas maksta kätte ning logis teie parooliga teie kontosse sisse \n" +
-                        "ja otsustas teie nimel edastada teie sõpradele sobimatu sisuga linke. Mitu sõpra avasid lingi ning said teie peale pahaseks.",
+                "Läksite tuttavaga tülli. Teie tuttav otsustas maksta kätte ning logis teie parooliga teie kontosse sisse ja otsustas teie nimel edastada teie sõpradele sobimatu sisuga linke. Mitu sõpra avasid lingi ning said teie peale pahaseks.",
                 "Tuttava abil uue parooli loomine on ohtlik, sest püsib oht, et teie tuttav võib teie parooli teadmisel teie kontot kuritarvitada.",
                 -5
         ));
 
         küsimus3.lisaValik(new Valik(
                 "Leidsin internetist kontaktid Aasias tegutsevast ettevõttest, kes aitavad TASUTA parooli taastada",
-                "SUUR VIGA! Aasias tegutsevat ettevõtet ei eksisteeri. Ettevõtte taga seisid kurjategijad, kes võtsid sinu konto üle \n" +
-                        "ja alustasid phishinguga. Kaks sinu sõpra jäid neid uskuma ning kaotasid enda pangakontolt raha.",
-                "Enda andmeid ei tohiks kunagi jagada. Internetis tasuta parooli taastamise teenuseid pakkuvad ettevõtted \n" +
-                        "tegutsevad seadusvastaselt ning nende heasüdamlik eesmärk ei ole eluliselt usutav",
+                "SUUR VIGA! Aasias tegutsevat ettevõtet ei eksisteeri. Ettevõtte taga seisid kurjategijad, kes võtsid sinu konto üle ja alustasid phishinguga. Kaks sinu sõpra jäid neid uskuma ning kaotasid enda pangakontolt raha.",
+                "Enda andmeid ei tohiks kunagi jagada. Internetis tasuta parooli taastamise teenuseid pakkuvad ettevõtted tegutsevad seadusvastaselt ning nende heasüdamlik eesmärk ei ole eluliselt usutav.",
                 -10
         ));
 
