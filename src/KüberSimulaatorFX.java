@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import model.KasutajaProfiil;
 import model.Stsenaarium;
 import view.MängijaLoomisDialoog;
@@ -80,6 +81,14 @@ public class KüberSimulaatorFX extends Application {
         peaLava.setWidth(800);
         peaLava.setHeight(600);
         peaLava.setResizable(true);
+        
+         // Määrame rakenduse ikooni
+        try {
+            Image icon = new Image(getClass().getResourceAsStream("/icon.png"));
+            peaLava.getIcons().add(icon);
+        } catch (Exception e) {
+            System.err.println("Hoiatus: Rakenduse ikooni laadimine ebaõnnestus: " + e.getMessage());
+        }
         
         // Näitame mängija valiku ekraani
         Scene alguseStseen = looMängijaValikEkraan();
